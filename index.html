@@ -1,102 +1,213 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mi Portfolio Profesional - Alejandro Vázquez</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
     <header class="hero">
         <div class="hero-content">
-            <img src="./img/space_invaders.jpeg" alt="space_invaders" class="profile-pic">
+            <img src="./img/maniac_mansion.png" alt="maniac_mansion" class="profile-pic" />
             <h1>¡Hola! Soy Alejandro Vázquez</h1>
             <div class="hero-content-paragraph">
-                <p>Desarrollador Frontend en formación.</p>
+                <p>
+                    Desarrollador Frontend en formación, con un fuerte interés en el
+                    desarrollo de videojuegos.
+                </p>
             </div>
         </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#sobre-mi">Sobre Mí</a></li>
+                <li><a href="#que-hago">Qué Hago</a></li>
+                <li><a href="#herramientas">Herramientas</a></li>
+                <li><a href="#proyectos">Proyectos</a></li>
+                <li><a href="#contacto " class="">Contacto</a></li>
+            </ul>
+        </nav>
     </header>
 
     <main>
         <section id="sobre-mi" class="section-padding">
             <h2>Sobre Mí</h2>
-            <p>¡Bienvenido/a a mi portfolio! Soy un apasionado del desarrollo web, actualmente cursando la materia de Frontend en IFTS 16. Me encanta transformar ideas en experiencias digitales interactivas y visualmente atractivas. Estoy siempre aprendiendo y buscando nuevas formas de mejorar mis habilidades.</p>
-            <p>Fuera del código, disfruto de Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestias nemo alias fugiat. Tempore earum laborum nostrum repellendus maxime magni distinctio?</p>
-            </section>
+            <p>
+                ¡Bienvenido/a a mi portfolio! Soy <strong>Alejandro Vázquez</strong>, un entusiasta del desarrollo de software.
+                Actualmente, estoy sumergido en mi carrera en el IFTS 16, perfeccionando mis habilidades para
+                transformar ideas en experiencias digitales interactivas y visualmente atractivas
+            </p>
+
+            <p>
+                Más allá de mis estudios formales, mi verdadera vocación y objetivo a
+                largo plazo es el <strong>desarrollo de videojuegos</strong>. Desde la
+                concepción de mecánicas hasta la creación de mundos, exploro este
+                campo de manera autodidacta y paralela a mi formación. Disfruto tanto
+                de la lógica de programar un sistema de juego como de la inmersión en
+                la experiencia de jugar.
+            </p>
+
+            <p>
+                Fuera del código, me gusta mantenerme activo y explorar el mundo que
+                me rodea. Disfruto de la práctica de deportes, la energía de la música
+                y la aventura de viajar. Creo que estas experiencias nutren mi
+                creatividad y mi capacidad para resolver problemas, habilidades
+                esenciales en cualquier tipo de desarrollo.
+            </p>
+
+            <p>
+                Me considero una persona curiosa, autodidacta y siempre en búsqueda de
+                desafíos que me permitan crecer tanto personal como profesionalmente.
+                ¡Gracias por visitar mi espacio!
+            </p>
+        </section>
+
+        <section id="que-hago" class="section-padding">
+            <h2>Qué Hago</h2>
+            <div class="services-grid">
+                <article class="service-card">
+                    <h3>Desarrollo Web Frontend</h3>
+                    <p>
+                        Creación de interfaces de usuario atractivas y funcionales
+                        utilizando HTML, CSS y JavaScript para asegurar una excelente
+                        experiencia de usuario.
+                    </p>
+                </article>
+                <article class="service-card">
+                    <h3>Diseño Responsive</h3>
+                    <p>
+                        Diseño y desarrollo de sitios web que se adaptan y lucen perfectos
+                        en cualquier dispositivo, desde computadoras de escritorio hasta
+                        móviles.
+                    </p>
+                </article>
+                <article class="service-card">
+                    <h3>Exploración en Desarrollo de Videojuegos</h3>
+                    <p>
+                        Con gran entusiasmo, estoy explorando los fundamentos del
+                        desarrollo de videojuegos, incluyendo la lógica de programación y
+                        el diseño de mecánicas interactivas.
+                    </p>
+                </article>
+            </div>
+        </section>
 
         <section id="herramientas" class="section-padding">
-            <h2>Herramientas que Trabajo</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Tecnología</th>
-                        <th>Nivel / Interés</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>HTML5</td>
-                        <td>Intermedio</td>
-                    </tr>
-                    <tr>
-                        <td>CSS3</td>
-                        <td>Intermedio</td>
-                    </tr>
-                    <tr>
-                        <td>JavaScript</td>
-                        <td>Básico (en aprendizaje)</td>
-                    </tr>
-                    <tr>
-                        <td>React</td>
-                        <td>Quiero aprender</td>
-                    </tr>
-                    <tr>
-                        <td>Control de Versiones (Git)</td>
-                        <td>Básico</td>
-                    </tr>
-                </tbody>
-            </table>
-            </section>
+            <h2>Herramientas y Tecnologías</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Categoría</th>
+                            <th>Tecnología</th>
+                            <th>Nivel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="4">Desarrollo Web Frontend</td>
+                            <td>HTML5</td>
+                            <td>Intermedio</td>
+                        </tr>
+                        <tr>
+                            <td>CSS3</td>
+                            <td>Intermedio</td>
+                        </tr>
+                        <tr>
+                            <td>JavaScript</td>
+                            <td>Básico (en aprendizaje)</td>
+                        </tr>
+                        <tr>
+                            <td>Control de Versiones (Git)</td>
+                            <td>Básico</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="3">Desarrollo de Videojuegos</td>
+                            <td>Unity</td>
+                            <td>Intermedio</td>
+                        </tr>
+                        <tr>
+                            <td>Godot</td>
+                            <td>Básico</td>
+                        </tr>
+                        <tr>
+                            <td>C#</td>
+                            <td>Intermedio</td>
+                        </tr>
+                        <tr>
+                            <td>Próximos Aprendizajes</td>
+                            <td>React</td>
+                            <td>Quiero aprender</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
-        <section id="trabajos" class="section-padding">
-            <h2>Mis Trabajos</h2>
+        <section id="proyectos" class="section-padding">
+            <h2>Mis Proyectos</h2>
             <div class="project-grid">
                 <article class="project-card">
                     <h3>Proyecto 1: Portfolio Profesional</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, tenetur?</p>
+                    <p>
+                        Un sitio web diseñado para mostrar mis habilidades y proyectos de
+                        desarrollo frontend, construido con HTML5 y CSS3.
+                    </p>
                     <a href="#" target="_blank" class="btn">Ver Proyecto</a>
                 </article>
                 <article class="project-card">
-                    <h3>Proyecto 2: Nombre del Proyecto</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit alias explicabo itaque facere repellat libero?</p>
+                    <h3>Proyecto 2: Tienda de Cafe</h3>
+                    <p>
+                        Un sitio web diseñado para mostrar mis habilidades y proyectos de
+                        desarrollo frontend, construido con HTML5 y CSS3.
+                    </p>
                     <a href="#" target="_blank" class="btn">Ver Proyecto</a>
                 </article>
-                </div>
+                <article class="project-card">
+                    <h3>Proyecto 3: Proximamente</h3>
+                    <p>
+                        Un sitio web diseñado para mostrar mis habilidades y proyectos de
+                        desarrollo frontend, construido con HTML5 y CSS3.
+                    </p>
+                    <a href="#" target="_blank" class="btn">Ver Proyecto</a>
+                </article>
+            </div>
         </section>
     </main>
 
-    <footer class="section-padding">
+    <footer id="contacto" class="section-padding">
         <h3>Contacto</h3>
         <form action="#" method="POST" class="contact-form">
-            <p>¿Tienes alguna pregunta o quieres colaborar en un proyecto? ¡No dudes en contactarme!</p>
+            <p>
+                ¿Tienes alguna pregunta o quieres colaborar en un proyecto? ¡No dudes
+                en contactarme!
+            </p>
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required>
+                <input type="text" id="nombre" name="nombre" required />
             </div>
             <div class="form-group">
                 <label for="apellido">Apellido:</label>
-                <input type="text" id="apellido" name="apellido" required>
+                <input type="text" id="apellido" name="apellido" required />
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" required />
             </div>
             <div class="form-group">
                 <label for="telefono">Teléfono:</label>
-                <input type="tel" id="telefono" name="telefono">
+                <input type="tel" id="telefono" name="telefono" />
             </div>
-            <button type="submit" class="btn">Enviar Mensaje</button>
+            <button type="submit" class="btn">
+                Enviar Mensaje <i class="fas fa-paper-plane"></i>
+            </button>
         </form>
     </footer>
 </body>
+
 </html>
