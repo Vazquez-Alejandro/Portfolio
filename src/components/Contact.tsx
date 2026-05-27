@@ -49,15 +49,8 @@ export default function Contact() {
             <GithubIcon />
             GitHub
           </a>
-          <a
-            href="https://www.linkedin.com/in/alejandrovazquez82"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/10 text-zinc-300 hover:bg-white/5 transition-all duration-300"
-          >
-            <LinkedinIcon />
-            LinkedIn
-          </a>
+          {/* LinkedIn link comentado */}
+          
         </div>
 
         <div className="max-w-md mx-auto">
