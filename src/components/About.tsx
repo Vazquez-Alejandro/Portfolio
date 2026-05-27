@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { GraduationCap, Calendar, MapPin } from "lucide-react";
+import { GraduationCap, MapPin } from "lucide-react";
 
 export default function About() {
   return (
@@ -23,10 +23,10 @@ export default function About() {
 
         <div className="space-y-5 text-zinc-400 text-base sm:text-lg leading-relaxed">
           <p>
-            Soy desarrollador de software graduado en diciembre de 2025.
-            Mi enfoque está en construir aplicaciones web completas, desde
-            el frontend hasta el backend, priorizando la seguridad, el
-            rendimiento y la experiencia de usuario.
+            Soy desarrollador de software con formación en desarrollo
+            full-stack. He trabajado con Java, actualmente me especializo
+            en React.js y próximamente comienzo a estudiar desarrollo
+            de videojuegos.
           </p>
           <p>
             Trabajo con TypeScript, Python, React, Next.js y FastAPI,
@@ -36,8 +36,8 @@ export default function About() {
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-6 mt-10">
-          <div className="flex items-start gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10">
+          <div className="flex items-start gap-3 p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
             <div className="p-2 rounded-lg bg-purple-500/10 border border-purple-500/20 shrink-0">
               <GraduationCap size={18} className="text-purple-400" />
             </div>
@@ -45,10 +45,32 @@ export default function About() {
               <p className="text-sm font-medium text-zinc-200">
                 Desarrollador de Software
               </p>
-              <p className="text-xs text-zinc-500">Graduado Dic 2025</p>
+              <p className="text-xs text-zinc-500">IFTS n° 16</p>
             </div>
           </div>
-          <div className="flex items-start gap-3">
+          <div className="flex items-start gap-3 p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
+            <div className="p-2 rounded-lg bg-pink-500/10 border border-pink-500/20 shrink-0">
+              <GraduationCap size={18} className="text-pink-400" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-zinc-200">Cursos</p>
+              <ul className="text-xs text-zinc-500 mt-1 space-y-1">
+                <li className="flex items-center gap-1.5">
+                  <span className="w-1 h-1 rounded-full bg-purple-400 shrink-0" />
+                  Java (2 stacks)
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <span className="w-1 h-1 rounded-full bg-cyan-400 shrink-0" />
+                  React.js (actual)
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <span className="w-1 h-1 rounded-full bg-pink-400 shrink-0" />
+                  Videojuegos (próximamente)
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="flex items-start gap-3 p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
             <div className="p-2 rounded-lg bg-cyan-500/10 border border-cyan-500/20 shrink-0">
               <MapPin size={18} className="text-cyan-400" />
             </div>
