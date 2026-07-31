@@ -22,6 +22,7 @@ const projects = [
     description:
       "SaaS completo para inmobiliarias. Importación de propiedades desde múltiples portales, generación de flyers y anuncios, contratos con firma digital, facturación con Mercado Pago y calendario de visitas.",
     icon: Home,
+    logo: "/logos/inmoxil.svg",
     tags: [
       "Next.js",
       "TypeScript",
@@ -46,6 +47,7 @@ const projects = [
     description:
       "Plataforma de automatización de ventas. Scraping de leads, demos personalizadas con IA, campañas multicanal (WhatsApp + Email), cobros con Stripe/Mercado Pago y pipeline de ventas en tiempo real.",
     icon: Users,
+    logo: "/logos/revendr.svg",
     tags: [
       "React",
       "Firebase",
@@ -70,6 +72,7 @@ const projects = [
     description:
       "Monitoreo de precios para marcas. Detección automática de violaciones MAP, alertas en tiempo real por WhatsApp/Telegram, reportes PDF, captura de evidencia y dashboard con KPIs.",
     icon: ShoppingCart,
+    logo: "/logos/priceanchor.png",
     tags: [
       "React",
       "Vite",
@@ -94,6 +97,7 @@ const projects = [
     description:
       "Herramienta de protección de datos personales bajo la Ley 25.326 argentina. Monitoreo de filtraciones, generación de cartas Habeas Data y dashboard de cumplimiento normativo.",
     icon: Shield,
+    logo: "/logos/traceless.svg",
     tags: [
       "Next.js",
       "TypeScript",
@@ -118,6 +122,7 @@ const projects = [
     description:
       "Sistema de turnos para negocios de servicios. Reserva online, gestión de profesionales, disponibilidad por servicio, recordatorios por WhatsApp y panel de administración.",
     icon: Scissors,
+    logo: null,
     tags: [
       "Next.js",
       "TypeScript",
@@ -141,6 +146,7 @@ const projects = [
     description:
       "Motor de monitoreo de precios y alertas de ofertas. API oficial de MercadoLibre, scraping de vuelos y alojamientos, alertas por Telegram/WhatsApp/Email, rate limiting inteligente y despliegue en Docker.",
     icon: Search,
+    logo: "/logos/howlify.png",
     tags: [
       "Python",
       "FastAPI",
@@ -210,9 +216,13 @@ export default function Projects() {
               <div className="h-full rounded-2xl bg-[#0a0f1e] p-6 sm:p-8">
                 <div className="flex items-start justify-between mb-6">
                   <div
-                    className={`p-3 rounded-xl bg-gradient-to-br ${project.color} shadow-lg`}
+                    className={`p-3 rounded-xl bg-gradient-to-br ${project.color} shadow-lg flex items-center justify-center`}
                   >
-                    <project.icon size={22} className="text-white" />
+                    {project.logo ? (
+                      <img src={project.logo} alt={project.title} className="w-[22px] h-[22px] object-contain" />
+                    ) : (
+                      <project.icon size={22} className="text-white" />
+                    )}
                   </div>
                   <div className="flex gap-2">
                     {project.github && (
