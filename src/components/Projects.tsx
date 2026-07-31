@@ -8,6 +8,8 @@ import {
   ShoppingCart,
   Users,
   Calendar,
+  Scissors,
+  Search,
 } from "lucide-react";
 
 const GithubIcon = () => (
@@ -98,7 +100,7 @@ const projects = [
       "Neon",
       "Clerk",
       "Resend",
-      "LemonSqueezy",
+      "MercadoPago",
     ],
     github: null,
     live: "https://www.traceless.com.ar",
@@ -112,26 +114,51 @@ const projects = [
     ],
   },
   {
-    title: "Turnos-Online",
+    title: "AgenPro",
     description:
       "Sistema de turnos para negocios de servicios. Reserva online, gestión de profesionales, disponibilidad por servicio, recordatorios por WhatsApp y panel de administración.",
-    icon: Calendar,
+    icon: Scissors,
     tags: [
       "Next.js",
       "TypeScript",
       "Supabase",
       "Tailwind CSS",
-      "Vercel",
+      "MercadoPago",
     ],
     github: null,
     live: "https://turnos-online-alpha.vercel.app",
-    color: "from-rose-500 to-pink-600",
+    color: "from-amber-500 to-yellow-600",
     features: [
       "Reserva online",
       "Gestión de profesionales",
       "Disponibilidad por servicio",
       "Recordatorios WhatsApp",
       "Panel admin",
+    ],
+  },
+  {
+    title: "Howlify",
+    description:
+      "Motor de monitoreo de precios y alertas de ofertas. API oficial de MercadoLibre, scraping de vuelos y alojamientos, alertas por Telegram/WhatsApp/Email, rate limiting inteligente y despliegue en Docker.",
+    icon: Search,
+    tags: [
+      "Python",
+      "FastAPI",
+      "Celery",
+      "Supabase",
+      "React",
+      "Playwright",
+      "Docker",
+    ],
+    github: "https://github.com/Vazquez-Alejandro/Howlify",
+    live: null,
+    color: "from-cyan-500 to-blue-600",
+    features: [
+      "ML API oficial",
+      "Alertas multicanal",
+      "Búsqueda de vuelos",
+      "Rate limiting",
+      "34 tests",
     ],
   },
 ];

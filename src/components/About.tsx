@@ -25,8 +25,7 @@ export default function About() {
           <p>
             Soy desarrollador de software con formación en desarrollo
             full-stack. He trabajado con Java, actualmente me especializo
-            en React.js y próximamente comienzo a estudiar desarrollo
-            de videojuegos.
+            en React.js y desarrollo de videojuegos.
           </p>
           <p>
             Trabajo con TypeScript, Python, React, Next.js y FastAPI,
@@ -65,7 +64,7 @@ export default function About() {
                 </li>
                 <li className="flex items-center gap-1.5">
                   <span className="w-1 h-1 rounded-full bg-pink-400 shrink-0" />
-                  Videojuegos (próximamente)
+                  Desarrollo de Videojuegos
                 </li>
               </ul>
             </div>

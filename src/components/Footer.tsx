@@ -1,13 +1,13 @@
 "use client";
 
-import { Mail, Heart } from "lucide-react";
+import { Mail } from "lucide-react";
 
 export default function Footer() {
   return (
     <footer className="border-t border-white/5 py-8">
       <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="text-sm text-zinc-500 flex items-center gap-1">
-          Hecho con <Heart size={12} className="text-pink-500" /> por Alejandro Vázquez
+        <p className="text-sm text-zinc-500">
+          &copy; {new Date().getFullYear()} Alejandro Vázquez
         </p>
         <div className="flex items-center gap-4">
           <a
