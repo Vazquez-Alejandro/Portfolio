@@ -66,7 +66,7 @@ const projects = [
     description:
       "Plataforma de automatización de ventas. Scraping de leads, demos personalizadas con IA, campañas multicanal (WhatsApp + Email), cobros con Stripe/Mercado Pago y pipeline de ventas en tiempo real.",
     icon: Users,
-    logo: "/logos/revendr.svg",
+    logo: "/logos/revendr.png",
     tags: [
       "React",
       "Firebase",
@@ -116,7 +116,7 @@ const projects = [
     description:
       "Herramienta de protección de datos personales bajo la Ley 25.326 argentina. Monitoreo de filtraciones, generación de cartas Habeas Data y dashboard de cumplimiento normativo.",
     icon: Shield,
-    logo: "/logos/traceless.svg",
+    logo: "/logos/traceless.png",
     tags: [
       "Next.js",
       "TypeScript",
