@@ -5,7 +5,6 @@ import Image from "next/image";
 import {
   ClipboardCheck,
   ExternalLink,
-  Home,
   Shield,
   ShoppingCart,
   Users,
@@ -37,28 +36,21 @@ const projects = [
     ],
   },
   {
-    title: "Inmoxil",
+    title: "ControlOps",
     description:
-      "SaaS completo para inmobiliarias. Importación de propiedades desde múltiples portales, generación de flyers y anuncios, contratos con firma digital, facturación con Mercado Pago y calendario de visitas.",
-    icon: Home,
-    logo: "/logos/inmoxil.svg",
-    tags: [
-      "Next.js",
-      "TypeScript",
-      "Supabase",
-      "Mercado Pago",
-      "Scraping",
-      "Tailwind CSS",
-    ],
+      "Software de gestión de auditorías, controles y planes de acción. Dashboard web, app móvil con React Native, autenticación con Supabase y pagos con MercadoPago.",
+    icon: ClipboardCheck,
+    logo: "/logos/controlops.svg",
+    tags: ["Python", "FastAPI", "PostgreSQL", "React", "React Native", "Expo"],
     github: null,
-    live: "https://inmoxil.vercel.app",
-    color: "from-blue-500 to-cyan-500",
+    live: null,
+    color: "from-purple-500 to-indigo-600",
     features: [
-      "Multi-portal scraping",
-      "Generador de ads",
-      "Contratos digitales",
-      "Facturación MP",
-      "Calendario de visitas",
+      "Auditorías y controles",
+      "Planes de acción",
+      "App móvil Expo",
+      "Supabase Auth",
+      "MercadoPago",
     ],
   },
   {
@@ -162,24 +154,6 @@ const projects = [
       "34 tests",
     ],
   },
-  {
-    title: "ControlOps",
-    description:
-      "Software de gestión de auditorías, controles y planes de acción. Dashboard web, app móvil con React Native, autenticación con Supabase y pagos con MercadoPago.",
-    icon: ClipboardCheck,
-    logo: "/logos/controlops.svg",
-    tags: ["Python", "FastAPI", "PostgreSQL", "React", "React Native", "Expo"],
-    github: null,
-    live: null,
-    color: "from-purple-500 to-indigo-600",
-    features: [
-      "Auditorías y controles",
-      "Planes de acción",
-      "App móvil Expo",
-      "Supabase Auth",
-      "MercadoPago",
-    ],
-  },
 ];
 
 const container = {
@@ -219,13 +193,11 @@ export default function Projects() {
         viewport={{ once: true, margin: "-100px" }}
         className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto"
       >
-        {projects.map((project, index) => (
+        {projects.map((project) => (
           <motion.div
             key={project.title}
             variants={item}
-            className={`group relative ${
-              index === projects.length - 1 ? "lg:col-span-2" : ""
-            }`}
+            className="group relative"
           >
             <div className="relative h-full p-[1px] rounded-2xl bg-gradient-to-b from-white/10 to-transparent overflow-hidden">
               <div className="h-full rounded-2xl bg-[#0a0f1e] p-6 sm:p-8">

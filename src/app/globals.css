@@ -97,6 +97,10 @@ body {
   }
 }
 
+#about {
+  padding-top: 3rem;
+}
+
 .grid-pattern {
   background-image:
     radial-gradient(circle at 1px 1px, rgba(139, 92, 246, 0.05) 1px, transparent 0);
