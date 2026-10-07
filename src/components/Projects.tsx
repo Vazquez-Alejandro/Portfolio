@@ -230,22 +230,22 @@ export default function Projects() {
             <div className="relative h-full p-[1px] rounded-2xl bg-gradient-to-b from-white/10 to-transparent overflow-hidden">
               <div className="h-full rounded-2xl bg-[#0a0f1e] p-6 sm:p-8">
                 <div className="flex items-start justify-between mb-6">
-                  <div
-                    className={`p-3 rounded-xl bg-gradient-to-br ${project.color} shadow-lg flex items-center justify-center`}
-                  >
-                    {project.logo ? (
-                      <Image
-                        src={project.logo}
-                        alt=""
-                        width={32}
-                        height={32}
-                        unoptimized={project.logo.endsWith(".svg")}
-                        className="w-8 h-8 object-contain"
-                      />
-                    ) : (
+                  {project.logo ? (
+                    <Image
+                      src={project.logo}
+                      alt=""
+                      width={44}
+                      height={44}
+                      unoptimized={project.logo.endsWith(".svg")}
+                      className="w-11 h-11 object-contain"
+                    />
+                  ) : (
+                    <div
+                      className={`p-3 rounded-xl bg-gradient-to-br ${project.color} shadow-lg`}
+                    >
                       <project.icon size={22} className="text-white" />
-                    )}
-                  </div>
+                    </div>
+                  )}
                   <div className="flex gap-2">
                     {project.github && (
                       <a
