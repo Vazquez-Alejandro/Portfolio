@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Mail } from "lucide-react";
 
@@ -42,17 +41,9 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <a
           href="#"
-          aria-label="Inicio"
-          className="transition-opacity hover:opacity-75"
+          className="text-lg font-semibold tracking-tight hover:text-purple-400 transition-colors"
         >
-          <Image
-            src="/logos/av.png"
-            alt="AV"
-            width={160}
-            height={160}
-            priority
-            className="h-10 w-10"
-          />
+          AV<span className="text-purple-400">.</span>
         </a>
 
         <nav className="hidden md:flex items-center gap-8">
