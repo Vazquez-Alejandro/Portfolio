@@ -1,14 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import {
+  ClipboardCheck,
   ExternalLink,
   Home,
   Shield,
   ShoppingCart,
   Users,
-  Calendar,
-  Scissors,
+  UtensilsCrossed,
   Search,
 } from "lucide-react";
 
@@ -18,10 +19,29 @@ const GithubIcon = () => (
 
 const projects = [
   {
+    title: "Blickapp",
+    description:
+      "Sistema de gestión gastronómica para cadenas de locales. POS propio, ventas y tickets, inventarios con recetas y CMV, mermas, liquidación de mano de obra con F.931 y Estado de Resultados de 19 líneas.",
+    icon: UtensilsCrossed,
+    logo: "/logos/blickapp.png",
+    tags: ["Go", "React", "TypeScript", "PostgreSQL", "Tailwind CSS"],
+    github: null,
+    live: "https://blickapp.vercel.app",
+    color: "from-orange-500 to-red-600",
+    features: [
+      "POS propio",
+      "CMV y recetas",
+      "Mermas e inventarios",
+      "Estado de Resultados",
+      "QA 22/22 endpoints",
+    ],
+  },
+  {
     title: "Inmoxil",
     description:
       "SaaS completo para inmobiliarias. Importación de propiedades desde múltiples portales, generación de flyers y anuncios, contratos con firma digital, facturación con Mercado Pago y calendario de visitas.",
     icon: Home,
+    logo: "/logos/inmoxil.svg",
     tags: [
       "Next.js",
       "TypeScript",
@@ -46,6 +66,7 @@ const projects = [
     description:
       "Plataforma de automatización de ventas. Scraping de leads, demos personalizadas con IA, campañas multicanal (WhatsApp + Email), cobros con Stripe/Mercado Pago y pipeline de ventas en tiempo real.",
     icon: Users,
+    logo: "/logos/revendr.svg",
     tags: [
       "React",
       "Firebase",
@@ -70,6 +91,7 @@ const projects = [
     description:
       "Monitoreo de precios para marcas. Detección automática de violaciones MAP, alertas en tiempo real por WhatsApp/Telegram, reportes PDF, captura de evidencia y dashboard con KPIs.",
     icon: ShoppingCart,
+    logo: "/logos/priceanchor.png",
     tags: [
       "React",
       "Vite",
@@ -94,6 +116,7 @@ const projects = [
     description:
       "Herramienta de protección de datos personales bajo la Ley 25.326 argentina. Monitoreo de filtraciones, generación de cartas Habeas Data y dashboard de cumplimiento normativo.",
     icon: Shield,
+    logo: "/logos/traceless.svg",
     tags: [
       "Next.js",
       "TypeScript",
@@ -114,33 +137,11 @@ const projects = [
     ],
   },
   {
-    title: "AgenPro",
-    description:
-      "Sistema de turnos para negocios de servicios. Reserva online, gestión de profesionales, disponibilidad por servicio, recordatorios por WhatsApp y panel de administración.",
-    icon: Scissors,
-    tags: [
-      "Next.js",
-      "TypeScript",
-      "Supabase",
-      "Tailwind CSS",
-      "MercadoPago",
-    ],
-    github: null,
-    live: "https://turnos-online-alpha.vercel.app",
-    color: "from-amber-500 to-yellow-600",
-    features: [
-      "Reserva online",
-      "Gestión de profesionales",
-      "Disponibilidad por servicio",
-      "Recordatorios WhatsApp",
-      "Panel admin",
-    ],
-  },
-  {
     title: "Howlify",
     description:
       "Motor de monitoreo de precios y alertas de ofertas. API oficial de MercadoLibre, scraping de vuelos y alojamientos, alertas por Telegram/WhatsApp/Email, rate limiting inteligente y despliegue en Docker.",
     icon: Search,
+    logo: "/logos/howlify.png",
     tags: [
       "Python",
       "FastAPI",
@@ -159,6 +160,24 @@ const projects = [
       "Búsqueda de vuelos",
       "Rate limiting",
       "34 tests",
+    ],
+  },
+  {
+    title: "ControlOps",
+    description:
+      "Software de gestión de auditorías, controles y planes de acción. Dashboard web, app móvil con React Native, autenticación con Supabase y pagos con MercadoPago.",
+    icon: ClipboardCheck,
+    logo: "/logos/controlops.svg",
+    tags: ["Python", "FastAPI", "PostgreSQL", "React", "React Native", "Expo"],
+    github: null,
+    live: null,
+    color: "from-purple-500 to-indigo-600",
+    features: [
+      "Auditorías y controles",
+      "Planes de acción",
+      "App móvil Expo",
+      "Supabase Auth",
+      "MercadoPago",
     ],
   },
 ];
@@ -204,15 +223,28 @@ export default function Projects() {
           <motion.div
             key={project.title}
             variants={item}
-            className="group relative"
+            className={`group relative ${
+              index === projects.length - 1 ? "lg:col-span-2" : ""
+            }`}
           >
             <div className="relative h-full p-[1px] rounded-2xl bg-gradient-to-b from-white/10 to-transparent overflow-hidden">
               <div className="h-full rounded-2xl bg-[#0a0f1e] p-6 sm:p-8">
                 <div className="flex items-start justify-between mb-6">
                   <div
-                    className={`p-3 rounded-xl bg-gradient-to-br ${project.color} shadow-lg`}
+                    className={`p-3 rounded-xl bg-gradient-to-br ${project.color} shadow-lg flex items-center justify-center`}
                   >
-                    <project.icon size={22} className="text-white" />
+                    {project.logo ? (
+                      <Image
+                        src={project.logo}
+                        alt=""
+                        width={32}
+                        height={32}
+                        unoptimized={project.logo.endsWith(".svg")}
+                        className="w-8 h-8 object-contain"
+                      />
+                    ) : (
+                      <project.icon size={22} className="text-white" />
+                    )}
                   </div>
                   <div className="flex gap-2">
                     {project.github && (
