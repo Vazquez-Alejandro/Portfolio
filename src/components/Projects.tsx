@@ -43,7 +43,7 @@ const projects = [
     logo: "/logos/nivela.png",
     tags: ["Python", "FastAPI", "PostgreSQL", "React", "Vite", "Tailwind CSS", "Capacitor"],
     github: null,
-    live: null,
+    live: "https://getnivela.vercel.app",
     color: "from-purple-500 to-indigo-600",
     features: [
       "Auditorías y controles",
@@ -68,7 +68,7 @@ const projects = [
       "Mercado Pago",
     ],
     github: null,
-    live: null,
+    live: "https://revendr.com.ar",
     color: "from-violet-500 to-purple-600",
     features: [
       "Scraping de leads",
@@ -93,7 +93,7 @@ const projects = [
       "Telegram",
     ],
     github: null,
-    live: null,
+    live: "https://priceanchor.vercel.app",
     color: "from-amber-500 to-orange-600",
     features: [
       "Monitoreo 24/7",
@@ -119,6 +119,7 @@ const projects = [
     ],
     github: null,
     live: "https://www.traceless.com.ar",
+    liveLabel: "traceless.com.ar",
     color: "from-emerald-500 to-teal-600",
     features: [
       "Facturación por WhatsApp y audio",
@@ -144,7 +145,7 @@ const projects = [
       "Docker",
     ],
     github: "https://github.com/Vazquez-Alejandro/Howlify",
-    live: null,
+    live: "https://howlify.vercel.app",
     color: "from-cyan-500 to-blue-600",
     features: [
       "Vuelos 12 meses (Duffel NDC)",
