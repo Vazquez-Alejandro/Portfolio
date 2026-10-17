@@ -38,19 +38,19 @@ const projects = [
   {
     title: "ControlOps",
     description:
-      "Software de gestión de auditorías, controles y planes de acción. Dashboard web, app móvil con React Native, autenticación con Supabase y pagos con MercadoPago.",
+      "Software de gestión de auditorías, controles y planes de acción. Dashboard web y app móvil con Capacitor, detección automática de KO, evidencia multimedia, modo offline y reportes PDF. Autenticación con Supabase y pagos con MercadoPago.",
     icon: ClipboardCheck,
     logo: "/logos/controlops.png",
-    tags: ["Python", "FastAPI", "PostgreSQL", "React", "React Native", "Expo"],
+    tags: ["Python", "FastAPI", "PostgreSQL", "React", "Vite", "Tailwind CSS", "Capacitor"],
     github: null,
     live: null,
     color: "from-purple-500 to-indigo-600",
     features: [
       "Auditorías y controles",
+      "Detección de KO",
       "Planes de acción",
-      "App móvil Expo",
-      "Supabase Auth",
-      "MercadoPago",
+      "App móvil offline",
+      "Reportes PDF",
     ],
   },
   {
