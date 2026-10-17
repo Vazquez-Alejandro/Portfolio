@@ -36,11 +36,11 @@ const projects = [
     ],
   },
   {
-    title: "ControlOps",
+    title: "Nivela",
     description:
       "Software de gestión de auditorías, controles y planes de acción. Dashboard web y app móvil con Capacitor, detección automática de KO, evidencia multimedia, modo offline y reportes PDF. Autenticación con Supabase y pagos con MercadoPago.",
     icon: ClipboardCheck,
-    logo: "/logos/controlops.png",
+    logo: "/logos/nivela.png",
     tags: ["Python", "FastAPI", "PostgreSQL", "React", "Vite", "Tailwind CSS", "Capacitor"],
     github: null,
     live: null,
