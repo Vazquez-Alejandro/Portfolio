@@ -5,11 +5,11 @@ import Image from "next/image";
 import {
   ClipboardCheck,
   ExternalLink,
-  Shield,
+  ReceiptText,
   ShoppingCart,
   Users,
   UtensilsCrossed,
-  Search,
+  Plane,
 } from "lucide-react";
 
 const GithubIcon = () => (
@@ -40,7 +40,7 @@ const projects = [
     description:
       "Software de gestión de auditorías, controles y planes de acción. Dashboard web, app móvil con React Native, autenticación con Supabase y pagos con MercadoPago.",
     icon: ClipboardCheck,
-    logo: "/logos/controlops.svg",
+    logo: "/logos/controlops.png",
     tags: ["Python", "FastAPI", "PostgreSQL", "React", "React Native", "Expo"],
     github: null,
     live: null,
@@ -106,33 +106,33 @@ const projects = [
   {
     title: "TraceLess",
     description:
-      "Herramienta de protección de datos personales bajo la Ley 25.326 argentina. Monitoreo de filtraciones, generación de cartas Habeas Data y dashboard de cumplimiento normativo.",
-    icon: Shield,
+      "Facturación electrónica por WhatsApp para monotributistas y pequeños negocios. El usuario le manda un mensaje al bot contando la venta y la factura con CAE de ARCA se genera al instante, le llega al cliente con link de pago de MercadoPago, alias/QR y recordatorios de cobranza automáticos.",
+    icon: ReceiptText,
     logo: "/logos/traceless.png",
     tags: [
-      "Next.js",
-      "TypeScript",
-      "Neon",
-      "Clerk",
-      "Resend",
+      "Python",
+      "FastAPI",
+      "React",
+      "Supabase",
+      "WhatsApp API",
       "MercadoPago",
     ],
     github: null,
     live: "https://www.traceless.com.ar",
     color: "from-emerald-500 to-teal-600",
     features: [
-      "Monitoreo de breaches",
-      "Cartas Habeas Data",
-      "Ley 25.326",
-      "Dashboard compliance",
-      "Planes premium",
+      "Facturación por WhatsApp y audio",
+      "CAE de ARCA automático",
+      "Link de pago y alias en la factura",
+      "Cobranza automática al cliente",
+      "415 tests",
     ],
   },
   {
     title: "Howlify",
     description:
-      "Motor de monitoreo de precios y alertas de ofertas. API oficial de MercadoLibre, scraping de vuelos y alojamientos, alertas por Telegram/WhatsApp/Email, rate limiting inteligente y despliegue en Docker.",
-    icon: Search,
+      "Cazador automático de vuelos baratos, hoteles y paquetes de viaje para Latinoamérica. Motor de vigilancia 24/7 con búsqueda de ofertas reales vía Duffel API, alertas por Telegram/WhatsApp/Email, historial y predicción de precios.",
+    icon: Plane,
     logo: "/logos/howlify.png",
     tags: [
       "Python",
@@ -147,11 +147,11 @@ const projects = [
     live: null,
     color: "from-cyan-500 to-blue-600",
     features: [
-      "ML API oficial",
+      "Vuelos 12 meses (Duffel NDC)",
       "Alertas multicanal",
-      "Búsqueda de vuelos",
-      "Rate limiting",
-      "34 tests",
+      "Predicción de precios",
+      "Anti-bloqueo (stealth)",
+      "PWA + Web Push",
     ],
   },
 ];
