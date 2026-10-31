@@ -41,9 +41,9 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <a
           href="#"
-          className="text-lg font-semibold tracking-tight hover:text-purple-400 transition-colors"
+          className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-base font-bold tracking-tight hover:bg-gradient-to-br hover:from-purple-600/20 hover:to-cyan-500/20 hover:border-purple-500/40 hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-300"
         >
-          AV<span className="text-purple-400">.</span>
+          <span className="gradient-text">AV</span>
         </a>
 
         <nav className="hidden md:flex items-center gap-8">
