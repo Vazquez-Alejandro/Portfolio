@@ -64,7 +64,7 @@ export default function About() {
                 </li>
                 <li className="flex items-center gap-1.5">
                   <span className="w-1 h-1 rounded-full bg-pink-400 shrink-0" />
-                  Desarrollo de Videojuegos (actual)
+                   Desarrollo de Videojuegos (C#)
                 </li>
               </ul>
             </div>
