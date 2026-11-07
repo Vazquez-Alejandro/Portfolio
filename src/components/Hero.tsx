@@ -32,16 +32,19 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="relative text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-tight mb-6"
+            className="relative text-5xl sm:text-7xl md:text-8xl font-bold tracking-tighter leading-[0.9] mb-6"
+            style={{ WebkitTextStroke: "1px rgba(255,255,255,0.15)" }}
           >
             <span className="relative inline-block">
               <span
                 aria-hidden="true"
-                className="absolute inset-0 blur-md text-purple-500/40 select-none"
+                className="absolute inset-0 blur-xl text-purple-500/50 select-none"
               >
                 Alejandro Vázquez
               </span>
-              <span className="relative gradient-text">Alejandro Vázquez</span>
+              <span className="relative" style={{ color: "#c084fc" }}>
+                Alejandro Vázquez
+              </span>
             </span>
             <br />
             <span className="text-zinc-300">Software Developer</span>
