@@ -24,8 +24,8 @@ html {
 
 body {
   font-family: var(--font-sans), system-ui, sans-serif;
-  background-color: #030712;
-  color: var(--color-text-primary);
+  background-color: #0b070a;
+  color: #f5f2f4;
 }
 
 ::selection {
