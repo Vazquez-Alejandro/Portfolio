@@ -28,16 +28,24 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-tight mb-6"
-        >
-          <span className="gradient-text">Alejandro Vázquez</span>
-          <br />
-          <span className="text-zinc-300">Software Developer</span>
-        </motion.h1>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="relative text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-tight mb-6"
+          >
+            <span className="relative inline-block">
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 blur-md text-purple-500/40 select-none"
+              >
+                Alejandro Vázquez
+              </span>
+              <span className="relative gradient-text">Alejandro Vázquez</span>
+            </span>
+            <br />
+            <span className="text-zinc-300">Software Developer</span>
+          </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 30 }}
@@ -60,14 +68,14 @@ export default function Hero() {
             href="#projects"
             className="px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 to-cyan-500 text-white font-medium hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
           >
-            Ver proyectos
-          </a>
+             Ver proyectos →
+           </a>
           <a
             href="#contact"
             className="px-8 py-3 rounded-full border border-white/10 text-zinc-300 hover:bg-white/5 transition-all duration-300"
           >
-            Contactar
-          </a>
+             Contactar →
+           </a>
         </motion.div>
 
         <motion.div
