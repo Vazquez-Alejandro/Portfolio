@@ -1,85 +1,112 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Monitor, Server, Database, Wrench } from "lucide-react";
 
-const skillCategories = [
+const categories = [
   {
     title: "Frontend",
-    skills: ["TypeScript", "JavaScript", "React", "Next.js", "Tailwind CSS", "HTML/CSS"],
+    icon: Monitor,
+    span: "md:col-span-7",
+    accent: true,
+    skills: [
+      "TypeScript",
+      "JavaScript",
+      "React",
+      "Next.js",
+      "Tailwind CSS",
+      "HTML/CSS",
+    ],
   },
   {
     title: "Backend",
+    icon: Server,
+    span: "md:col-span-5",
+    accent: false,
     skills: ["Python", "FastAPI", "Node.js", "Java", "WebSockets", "REST APIs"],
   },
   {
-    title: "Base de datos",
+    title: "Bases de datos",
+    icon: Database,
+    span: "md:col-span-5",
+    accent: false,
     skills: ["PostgreSQL", "Supabase", "SQLite", "MySQL", "SQLAlchemy"],
   },
   {
     title: "Herramientas",
-    skills: ["Git & GitHub", "Docker", "Vite", "Playwright", "Streamlit", "Vercel/Render"],
+    icon: Wrench,
+    span: "md:col-span-7",
+    accent: false,
+    skills: [
+      "Git & GitHub",
+      "Docker",
+      "Vite",
+      "Playwright",
+      "Streamlit",
+      "Vercel/Render",
+    ],
   },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.08 },
-  },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
-
 export default function Skills() {
   return (
-    <section id="skills" className="section-container">
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6 }}
-      >
-        <h2 className="text-sm font-semibold text-purple-400 tracking-wider uppercase mb-3 text-center">
-          Habilidades
-        </h2>
-        <h3 className="text-3xl sm:text-4xl font-bold mb-14 text-center">
-          Stack <span className="gradient-text">tecnológico</span>
-        </h3>
-      </motion.div>
+    <section id="skills" className="section">
+      <div className="wrap">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="mb-12"
+        >
+          <p className="mono text-ciruela mb-4 tracking-widest uppercase">
+            Capacidades
+          </p>
+          <h2 className="h2 max-w-2xl">
+            Lo que traigo
+            <br />
+            <span className="text-gris">a un equipo.</span>
+          </h2>
+        </motion.div>
 
-      <motion.div
-        variants={container}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-100px" }}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto"
-      >
-        {skillCategories.map((cat) => (
-          <motion.div
-            key={cat.title}
-            variants={item}
-            className="p-6 rounded-2xl bg-white/[0.03] border border-white/[0.06] hover:border-purple-500/20 transition-colors"
-          >
-            <h4 className="text-sm font-semibold text-zinc-300 mb-4">
-              {cat.title}
-            </h4>
-            <div className="flex flex-wrap gap-2">
-              {cat.skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="px-3 py-1.5 text-xs rounded-lg bg-white/5 text-zinc-400 border border-white/5"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
+        <div className="bento">
+          {categories.map((cat, i) => (
+            <motion.div
+              key={cat.title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: i * 0.06 }}
+              className={`${cat.span} col-span-12 rounded-[28px] p-7 sm:p-9 flex flex-col min-h-[260px] relative overflow-hidden ${
+                cat.accent ? "bg-odoo" : "bg-surface"
+              }`}
+            >
+              <div className="flex items-center justify-between mb-8">
+                <cat.icon
+                  size={20}
+                  className={cat.accent ? "text-white/80" : "text-ciruela"}
+                />
+                <span className="mono text-white/40">0{i + 1}</span>
+              </div>
+              <h3 className="text-2xl font-semibold mb-3">{cat.title}</h3>
+              <div className="flex flex-wrap gap-2 mt-auto pt-6">
+                {cat.skills.map((skill) => (
+                  <span
+                    key={skill}
+                    className={`rounded-full px-3 py-1.5 text-xs font-mono ${
+                      cat.accent
+                        ? "bg-black/20 text-white/80"
+                        : "bg-white/5 text-gris"
+                    }`}
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

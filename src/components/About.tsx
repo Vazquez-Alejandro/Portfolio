@@ -1,85 +1,114 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { GraduationCap, MapPin } from "lucide-react";
+import { GraduationCap, MapPin, Code2 } from "lucide-react";
+
+const words =
+  "Trabajo donde el código se encuentra con las personas. Desarrollo software que resuelve problemas reales, no solo pantallas bonitas.".split(
+    " "
+  );
 
 export default function About() {
   return (
-    <section id="about" className="section-container">
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6 }}
-        className="max-w-3xl mx-auto"
-      >
-        <h2 className="text-sm font-semibold text-purple-400 tracking-wider uppercase mb-3">
+    <section id="about" className="section">
+      <div className="wrap">
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          className="mono text-ciruela mb-8 tracking-widest uppercase"
+        >
           Sobre mí
-        </h2>
-        <h3 className="text-3xl sm:text-4xl font-bold mb-8">
-          Transformando ideas en{" "}
-          <span className="gradient-text">código funcional</span>
-        </h3>
+        </motion.p>
 
-        <div className="space-y-5 text-zinc-400 text-base sm:text-lg leading-relaxed">
-          <p>
-            Soy desarrollador de software con formación en desarrollo
-            full-stack. He trabajado con Java, actualmente me especializo
-            en React.js y desarrollo de videojuegos.
-          </p>
-          <p>
-            Trabajo con TypeScript, Python, React, Next.js y FastAPI,
-            y me gusta enfrentar desafíos que requieran pensar en
-            soluciones creativas. Creo firmemente en el código limpio,
-            la documentación clara y el aprendizaje continuo.
-          </p>
-        </div>
+        <motion.h2
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ staggerChildren: 0.02 }}
+          className="text-4xl sm:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.05] max-w-4xl mb-14"
+        >
+          {words.map((word, i) => (
+            <motion.span
+              key={`${word}-${i}`}
+              variants={{
+                hidden: { opacity: 0.16 },
+                show: { opacity: 1, transition: { duration: 0.5 } },
+              }}
+              className={i > 7 && i < 11 ? "text-ciruela" : ""}
+            >
+              {word}{" "}
+            </motion.span>
+          ))}
+        </motion.h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10">
-          <div className="flex items-start gap-3 p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
-            <div className="p-2 rounded-lg bg-purple-500/10 border border-purple-500/20 shrink-0">
-              <GraduationCap size={18} className="text-purple-400" />
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="body-l max-w-2xl mb-14"
+        >
+          Soy desarrollador de software con formación en desarrollo full-stack.
+          He trabajado con Java y actualmente me especializo en React.js y
+          desarrollo de videojuegos. Creo firmemente en el código limpio, la
+          documentación clara y el aprendizaje continuo.
+        </motion.p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="bento-tile flex items-start gap-4"
+          >
+            <div className="p-2 rounded-xl bg-odoo/20 border border-odoo/30">
+              <GraduationCap size={18} className="text-ciruela" />
             </div>
             <div>
-              <p className="text-sm font-medium text-zinc-200">
-                Desarrollador de Software
-              </p>
-              <p className="text-xs text-zinc-500">IFTS n° 16</p>
+              <p className="font-medium">Desarrollador de Software</p>
+              <p className="mono text-gris mt-1">IFTS n° 16</p>
             </div>
-          </div>
-          <div className="flex items-start gap-3 p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
-            <div className="p-2 rounded-lg bg-pink-500/10 border border-pink-500/20 shrink-0">
-              <GraduationCap size={18} className="text-pink-400" />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="bento-tile flex items-start gap-4"
+          >
+            <div className="p-2 rounded-xl bg-odoo/20 border border-odoo/30">
+              <Code2 size={18} className="text-ciruela" />
             </div>
             <div>
-              <p className="text-sm font-medium text-zinc-200">Cursos</p>
-              <ul className="text-xs text-zinc-500 mt-1 space-y-1">
-                <li className="flex items-center gap-1.5">
-                  <span className="w-1 h-1 rounded-full bg-purple-400 shrink-0" />
-                  Java (2 stacks)
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <span className="w-1 h-1 rounded-full bg-cyan-400 shrink-0" />
-                  React.js
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <span className="w-1 h-1 rounded-full bg-pink-400 shrink-0" />
-                   Desarrollo de Videojuegos (C#)
-                </li>
+              <p className="font-medium">Cursos</p>
+              <ul className="mono text-gris mt-1 space-y-1">
+                <li>Java (2 stacks)</li>
+                <li>React.js</li>
+                <li>Videojuegos (C#)</li>
               </ul>
             </div>
-          </div>
-          <div className="flex items-start gap-3 p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
-            <div className="p-2 rounded-lg bg-cyan-500/10 border border-cyan-500/20 shrink-0">
-              <MapPin size={18} className="text-cyan-400" />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bento-tile flex items-start gap-4"
+          >
+            <div className="p-2 rounded-xl bg-odoo/20 border border-odoo/30">
+              <MapPin size={18} className="text-ciruela" />
             </div>
             <div>
-              <p className="text-sm font-medium text-zinc-200">Argentina</p>
-              <p className="text-xs text-zinc-500">Disponible para remoto</p>
+              <p className="font-medium">Argentina</p>
+              <p className="mono text-gris mt-1">Disponible para remoto</p>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
