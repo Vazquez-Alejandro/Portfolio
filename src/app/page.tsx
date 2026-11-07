@@ -1,3 +1,4 @@
+import CursorSwarm from "@/components/CursorSwarm";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -10,6 +11,7 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <>
+      <CursorSwarm />
       <Header />
       <main>
         <Hero />
