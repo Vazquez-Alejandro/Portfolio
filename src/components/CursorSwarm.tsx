@@ -190,6 +190,22 @@ export default function CursorSwarm() {
       last = now;
       time += dt;
 
+      const isWriting = writing.active && now < writing.until;
+
+      const rand = (n: number) => {
+        const v = Math.sin(n * 127.1 + 311.7) * 43758.5453;
+        return v - Math.floor(v);
+      };
+
+      const paintPoint = (seed: number) => {
+        const rx = rand(seed * 1.7 + 1);
+        const ry = rand(seed * 3.1 + 2);
+        return {
+          x: writing.x - rx * 28,
+          y: writing.y + (ry - 0.5) * writing.h * 0.85,
+        };
+      };
+
       ctx.clearRect(0, 0, w, h);
 
       if (mouse.active) {
@@ -204,23 +220,25 @@ export default function CursorSwarm() {
         const r = frame.el.getBoundingClientRect();
         const visible = r.top < h * 0.82 && r.bottom > h * 0.18;
 
-        if (frame.state === "idle" && visible) frame.state = "drawing";
+        if (!isWriting) {
+          if (frame.state === "idle" && visible) frame.state = "drawing";
 
-        if (frame.state === "drawing") {
-          frame.progress += dt * 0.8;
-          if (frame.progress >= 1) {
-            frame.progress = 1;
-            frame.state = "hold";
-            frame.hold = 0.55;
-          }
-        } else if (frame.state === "hold") {
-          frame.hold -= dt;
-          if (frame.hold <= 0) frame.state = "fade";
-        } else if (frame.state === "fade") {
-          frame.alpha -= dt * 1.6;
-          if (frame.alpha <= 0) {
-            frame.alpha = 0;
-            frame.state = "done";
+          if (frame.state === "drawing") {
+            frame.progress += dt * 0.8;
+            if (frame.progress >= 1) {
+              frame.progress = 1;
+              frame.state = "hold";
+              frame.hold = 0.55;
+            }
+          } else if (frame.state === "hold") {
+            frame.hold -= dt;
+            if (frame.hold <= 0) frame.state = "fade";
+          } else if (frame.state === "fade") {
+            frame.alpha -= dt * 1.6;
+            if (frame.alpha <= 0) {
+              frame.alpha = 0;
+              frame.state = "done";
+            }
           }
         }
 
@@ -276,7 +294,11 @@ export default function CursorSwarm() {
         let tx: number;
         let ty: number;
 
-        if (
+        if (isWriting) {
+          const p = paintPoint(d.frameIndex * 7 + d.offset + 10);
+          tx = p.x;
+          ty = p.y;
+        } else if (
           (frame.state === "drawing" || frame.state === "hold") &&
           frame.progress > 0
         ) {
@@ -301,17 +323,15 @@ export default function CursorSwarm() {
         drawCursor(ctx, d.x, d.y, d.color, d.size, rotate);
       });
 
-      // Cursors that write the hero name, then return to the swarm
-      const isWriting = writing.active && now < writing.until;
+      // Cursors that help paint the hero name
       writers.forEach((wr, i) => {
         let tx: number;
         let ty: number;
 
         if (isWriting) {
-          tx = writing.x + (i - 1) * 4;
-          ty =
-            writing.y +
-            Math.sin(time * 7 + i * 2.1) * (writing.h * 0.42);
+          const p = paintPoint(100 + i * 5);
+          tx = p.x + Math.cos(time * 7 + i) * 2;
+          ty = p.y + Math.sin(time * 6 + i) * 2;
         } else {
           tx = mouse.x + Math.cos(time * 1.1 + wr.angle) * 14;
           ty = mouse.y + Math.sin(time * 1.3 + wr.angle) * 14;
@@ -324,16 +344,26 @@ export default function CursorSwarm() {
         drawCursor(ctx, wr.x, wr.y, wr.color, wr.size, rotate);
       });
 
-      // Swarm following the pointer
-      let prevX = mouse.x;
-      let prevY = mouse.y;
-
+      // Swarm following the pointer, or the paint edge
       agents.forEach((a, i) => {
-        a.x += (prevX - a.x) * a.lag;
-        a.y += (prevY - a.y) * a.lag;
+        let tx: number;
+        let ty: number;
 
-        const wobbleX = Math.cos(time * a.speed + a.angle) * a.radius;
-        const wobbleY = Math.sin(time * a.speed * 1.3 + a.angle) * a.radius;
+        if (isWriting) {
+          const p = paintPoint(i * 3 + 50);
+          tx = p.x + Math.cos(time * 6 + a.angle) * 3;
+          ty = p.y + Math.sin(time * 5 + a.angle) * 2;
+        } else {
+          tx =
+            mouse.x + Math.cos(time * a.speed + a.angle) * a.radius;
+          ty =
+            mouse.y +
+            Math.sin(time * a.speed * 1.3 + a.angle) * a.radius;
+        }
+
+        a.x += (tx - a.x) * a.lag;
+        a.y += (ty - a.y) * a.lag;
+
         const rotate = Math.sin(time * a.speed + a.angle) * 18;
 
         if (i > 0) {
@@ -344,15 +374,12 @@ export default function CursorSwarm() {
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(prev.x, prev.y);
-          ctx.lineTo(a.x + wobbleX, a.y + wobbleY);
+          ctx.lineTo(a.x, a.y);
           ctx.stroke();
           ctx.restore();
         }
 
-        drawCursor(ctx, a.x + wobbleX, a.y + wobbleY, a.color, a.size, rotate);
-
-        prevX = a.x;
-        prevY = a.y;
+        drawCursor(ctx, a.x, a.y, a.color, a.size, rotate);
       });
 
       raf = requestAnimationFrame(animate);

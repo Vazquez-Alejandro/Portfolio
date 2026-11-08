@@ -28,20 +28,29 @@ export default function Hero() {
     }
 
     const phases = [
-      { el: line1, start: 500, duration: 1300 },
-      { el: line2, start: 1650, duration: 1300 },
+      { el: line1, start: 700, duration: 2600 },
+      { el: line2, start: 3400, duration: 2600 },
     ];
 
     phases.forEach((phase) => phase.el.style.setProperty("--paint", "0%"));
+
+    const initial = line1.getBoundingClientRect();
+    window.dispatchEvent(
+      new CustomEvent("swarm:writing", {
+        detail: {
+          active: true,
+          x: initial.left,
+          y: initial.top + initial.height / 2,
+          h: initial.height,
+        },
+      })
+    );
 
     let raf = 0;
     const t0 = performance.now();
 
     const tick = (now: number) => {
       const elapsed = now - t0;
-      let active:
-        | { el: HTMLSpanElement; progress: number }
-        | undefined;
 
       for (const phase of phases) {
         const t = Math.min(
@@ -50,25 +59,27 @@ export default function Hero() {
         );
         const eased = 1 - Math.pow(1 - t, 3);
         phase.el.style.setProperty("--paint", `${eased * 105}%`);
-
-        if (t > 0 && t < 1) {
-          active = { el: phase.el, progress: eased };
-        }
       }
 
-      if (active) {
-        const r = active.el.getBoundingClientRect();
-        window.dispatchEvent(
-          new CustomEvent("swarm:writing", {
-            detail: {
-              active: true,
-              x: r.left + r.width * active.progress,
-              y: r.top + r.height / 2,
-              h: r.height,
-            },
-          })
-        );
-      }
+      const current =
+        elapsed >= phases[1].start ? phases[1] : phases[0];
+      const t = Math.min(
+        Math.max((elapsed - current.start) / current.duration, 0),
+        1
+      );
+      const eased = 1 - Math.pow(1 - t, 3);
+      const r = current.el.getBoundingClientRect();
+
+      window.dispatchEvent(
+        new CustomEvent("swarm:writing", {
+          detail: {
+            active: true,
+            x: r.left + r.width * eased,
+            y: r.top + r.height / 2,
+            h: r.height,
+          },
+        })
+      );
 
       const done = phases.every(
         (phase) => elapsed - phase.start >= phase.duration
