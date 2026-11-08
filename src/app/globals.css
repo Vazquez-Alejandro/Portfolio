@@ -115,18 +115,24 @@ body {
   inset: 0;
 }
 
-.paint-name {
+.paint-line {
   --paint: 0%;
   -webkit-mask-image: linear-gradient(
     90deg,
-    #000 calc(var(--paint) - 2%),
-    transparent calc(var(--paint) + 2%)
+    #000 calc(var(--paint) - 3%),
+    transparent calc(var(--paint) + 3%)
   );
   mask-image: linear-gradient(
     90deg,
-    #000 calc(var(--paint) - 2%),
-    transparent calc(var(--paint) + 2%)
+    #000 calc(var(--paint) - 3%),
+    transparent calc(var(--paint) + 3%)
   );
+}
+
+.name-glow {
+  text-shadow:
+    0 0 44px rgba(208, 139, 189, 0.55),
+    0 0 110px rgba(113, 75, 103, 0.4);
 }
 
 .glass {

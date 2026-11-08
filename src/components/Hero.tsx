@@ -9,48 +9,80 @@ const fadeUp = {
 };
 
 export default function Hero() {
-  const nameRef = useRef<HTMLSpanElement>(null);
+  const line1Ref = useRef<HTMLSpanElement>(null);
+  const line2Ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    const el = nameRef.current;
-    if (!el) return;
+    const line1 = line1Ref.current;
+    const line2 = line2Ref.current;
+    if (!line1 || !line2) return;
 
     const reduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
     if (reduced) {
-      el.style.setProperty("--paint", "120%");
+      line1.style.setProperty("--paint", "120%");
+      line2.style.setProperty("--paint", "120%");
       return;
     }
 
-    const duration = 2400;
-    const delay = 700;
+    const phases = [
+      { el: line1, start: 500, duration: 1300 },
+      { el: line2, start: 1650, duration: 1300 },
+    ];
+
+    phases.forEach((phase) => phase.el.style.setProperty("--paint", "0%"));
+
     let raf = 0;
-    let start = 0;
+    const t0 = performance.now();
 
     const tick = (now: number) => {
-      if (!start) start = now + delay;
-      const t = Math.min(Math.max((now - start) / duration, 0), 1);
-      const eased = 1 - Math.pow(1 - t, 3);
-      el.style.setProperty("--paint", `${eased * 105}%`);
+      const elapsed = now - t0;
+      let active:
+        | { el: HTMLSpanElement; progress: number }
+        | undefined;
 
-      const r = el.getBoundingClientRect();
-      window.dispatchEvent(
-        new CustomEvent("swarm:writing", {
-          detail: {
-            active: t < 1,
-            x: r.left + r.width * eased,
-            y: r.top + r.height / 2,
-            h: r.height,
-          },
-        })
+      for (const phase of phases) {
+        const t = Math.min(
+          Math.max((elapsed - phase.start) / phase.duration, 0),
+          1
+        );
+        const eased = 1 - Math.pow(1 - t, 3);
+        phase.el.style.setProperty("--paint", `${eased * 105}%`);
+
+        if (t > 0 && t < 1) {
+          active = { el: phase.el, progress: eased };
+        }
+      }
+
+      if (active) {
+        const r = active.el.getBoundingClientRect();
+        window.dispatchEvent(
+          new CustomEvent("swarm:writing", {
+            detail: {
+              active: true,
+              x: r.left + r.width * active.progress,
+              y: r.top + r.height / 2,
+              h: r.height,
+            },
+          })
+        );
+      }
+
+      const done = phases.every(
+        (phase) => elapsed - phase.start >= phase.duration
       );
 
-      if (t < 1) {
+      if (!done) {
         raf = requestAnimationFrame(tick);
       } else {
-        el.style.setProperty("--paint", "120%");
+        phases.forEach((phase) =>
+          phase.el.style.setProperty("--paint", "120%")
+        );
+        window.dispatchEvent(
+          new CustomEvent("swarm:writing", { detail: { active: false } })
+        );
       }
     };
 
@@ -83,20 +115,32 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="relative text-[18vw] sm:text-[13vw] lg:text-[9rem] font-bold tracking-tighter leading-[0.86] mb-8"
           >
-            <span ref={nameRef} className="paint-name relative inline-block">
+            <span className="relative block">
               <span
                 aria-hidden="true"
-                className="name-halo absolute inset-0 select-none whitespace-pre-line"
+                className="block w-max whitespace-pre-line text-white/[0.07]"
               >
                 Alejandro
                 <br />
                 Vázquez
               </span>
-              <span className="name-lit relative whitespace-pre-line">
-                Alejandro
-                <br />
-                Vázquez
+
+              <span aria-hidden="true" className="absolute inset-0 block">
+                <span
+                  ref={line1Ref}
+                  className="paint-line name-lit name-glow block w-max"
+                >
+                  Alejandro
+                </span>
+                <span
+                  ref={line2Ref}
+                  className="paint-line name-lit name-glow block w-max"
+                >
+                  Vázquez
+                </span>
               </span>
+
+              <span className="sr-only">Alejandro Vázquez</span>
             </span>
           </motion.h1>
 
