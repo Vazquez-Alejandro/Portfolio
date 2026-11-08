@@ -37,7 +37,7 @@ const items = [
 
 export default function Timeline() {
   return (
-    <section id="experiencia" className="section">
+    <section id="experiencia" data-swarm="Trayectoria" className="section">
       <div className="wrap">
         <div className="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-12 lg:gap-20 items-start">
           <motion.div

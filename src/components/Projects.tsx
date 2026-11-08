@@ -67,7 +67,7 @@ const projects: Project[] = [
 
 export default function Projects() {
   return (
-    <section id="proyectos" className="section overflow-x-clip">
+    <section id="proyectos" data-swarm="Proyectos" className="section overflow-x-clip">
       <div className="wrap">
         <motion.div
           initial={{ opacity: 0, y: 24 }}

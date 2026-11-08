@@ -10,7 +10,7 @@ const words =
 
 export default function About() {
   return (
-    <section id="about" className="section">
+    <section id="about" data-swarm="Sobre mí" className="section">
       <div className="wrap">
         <motion.p
           initial={{ opacity: 0 }}

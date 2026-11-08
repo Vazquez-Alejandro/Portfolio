@@ -50,7 +50,7 @@ const categories = [
 
 export default function Skills() {
   return (
-    <section id="skills" className="section">
+    <section id="skills" data-swarm="Capacidades" className="section">
       <div className="wrap">
         <motion.div
           initial={{ opacity: 0, y: 24 }}

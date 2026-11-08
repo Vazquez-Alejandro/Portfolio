@@ -31,7 +31,7 @@ const links = [
 
 export default function Contact() {
   return (
-    <section id="contacto" className="section text-center overflow-hidden">
+    <section id="contacto" data-swarm="Contacto" className="section text-center overflow-hidden">
       <div className="wrap">
         <motion.p
           initial={{ opacity: 0 }}

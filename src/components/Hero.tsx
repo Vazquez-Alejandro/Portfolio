@@ -9,7 +9,7 @@ const fadeUp = {
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden px-6 pt-28 pb-20">
+    <section data-swarm="Hero" className="relative min-h-screen flex items-center overflow-hidden px-6 pt-28 pb-20">
       <div className="absolute -top-40 -right-40 w-[700px] h-[700px] rounded-full bg-odoo/30 blur-[160px]" />
       <div className="absolute bottom-0 -left-32 w-[500px] h-[500px] rounded-full bg-odoo/20 blur-[140px]" />
 
