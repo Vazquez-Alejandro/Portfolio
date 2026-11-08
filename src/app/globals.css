@@ -115,21 +115,18 @@ body {
   inset: 0;
 }
 
-.caret {
-  display: inline-block;
-  width: 0.06em;
-  height: 0.82em;
-  margin-left: 0.04em;
-  vertical-align: -0.04em;
-  background: var(--color-ciruela);
-  box-shadow: 0 0 14px var(--color-ciruela);
-  animation: caret-blink 0.9s steps(1) infinite;
-}
-
-@keyframes caret-blink {
-  50% {
-    opacity: 0;
-  }
+.paint-name {
+  --paint: 0%;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    #000 calc(var(--paint) - 2%),
+    transparent calc(var(--paint) + 2%)
+  );
+  mask-image: linear-gradient(
+    90deg,
+    #000 calc(var(--paint) - 2%),
+    transparent calc(var(--paint) + 2%)
+  );
 }
 
 .glass {

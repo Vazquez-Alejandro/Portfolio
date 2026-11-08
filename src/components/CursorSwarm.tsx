@@ -165,7 +165,7 @@ export default function CursorSwarm() {
       size: 15 - i * 2.5,
     }));
 
-    const writing = { active: false, x: 0, y: 0, until: 0 };
+    const writing = { active: false, x: 0, y: 0, h: 0, until: 0 };
 
     const onWriting = (e: Event) => {
       const detail = (e as CustomEvent).detail;
@@ -176,7 +176,8 @@ export default function CursorSwarm() {
       writing.active = true;
       writing.x = detail.x;
       writing.y = detail.y;
-      writing.until = performance.now() + 400;
+      writing.h = detail.h ?? 0;
+      writing.until = performance.now() + 250;
     };
     window.addEventListener("swarm:writing", onWriting);
 
@@ -307,8 +308,10 @@ export default function CursorSwarm() {
         let ty: number;
 
         if (isWriting) {
-          tx = writing.x + (i - 1) * 3;
-          ty = writing.y + (i - 1) * 5;
+          tx = writing.x + (i - 1) * 4;
+          ty =
+            writing.y +
+            Math.sin(time * 7 + i * 2.1) * (writing.h * 0.42);
         } else {
           tx = mouse.x + Math.cos(time * 1.1 + wr.angle) * 14;
           ty = mouse.y + Math.sin(time * 1.3 + wr.angle) * 14;

@@ -1,9 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-
-const FULL_NAME = "Alejandro\nVázquez";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -11,67 +9,54 @@ const fadeUp = {
 };
 
 export default function Hero() {
-  const [typed, setTyped] = useState("");
-  const [done, setDone] = useState(false);
-  const caretRef = useRef<HTMLSpanElement>(null);
+  const nameRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
+    const el = nameRef.current;
+    if (!el) return;
+
     const reduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
     if (reduced) {
-      const id = window.setTimeout(() => {
-        setTyped(FULL_NAME);
-        setDone(true);
-      }, 0);
-      return () => window.clearTimeout(id);
-    }
-
-    let charIndex = 0;
-    let interval: ReturnType<typeof setInterval> | undefined;
-
-    const start = window.setTimeout(() => {
-      interval = setInterval(() => {
-        charIndex += 1;
-        const next = FULL_NAME.slice(0, charIndex);
-        setTyped(next);
-
-        if (charIndex >= FULL_NAME.length) {
-          if (interval) clearInterval(interval);
-          setDone(true);
-        }
-      }, 105);
-    }, 700);
-
-    return () => {
-      window.clearTimeout(start);
-      if (interval) clearInterval(interval);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (done) {
-      window.dispatchEvent(
-        new CustomEvent("swarm:writing", { detail: { active: false } })
-      );
+      el.style.setProperty("--paint", "120%");
       return;
     }
 
-    const caret = caretRef.current;
-    if (!caret) return;
+    const duration = 2400;
+    const delay = 700;
+    let raf = 0;
+    let start = 0;
 
-    const rect = caret.getBoundingClientRect();
-    window.dispatchEvent(
-      new CustomEvent("swarm:writing", {
-        detail: {
-          active: true,
-          x: rect.left,
-          y: rect.top + rect.height / 2,
-        },
-      })
-    );
-  }, [typed, done]);
+    const tick = (now: number) => {
+      if (!start) start = now + delay;
+      const t = Math.min(Math.max((now - start) / duration, 0), 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      el.style.setProperty("--paint", `${eased * 105}%`);
+
+      const r = el.getBoundingClientRect();
+      window.dispatchEvent(
+        new CustomEvent("swarm:writing", {
+          detail: {
+            active: t < 1,
+            x: r.left + r.width * eased,
+            y: r.top + r.height / 2,
+            h: r.height,
+          },
+        })
+      );
+
+      if (t < 1) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        el.style.setProperty("--paint", "120%");
+      }
+    };
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
 
   return (
     <section
@@ -98,19 +83,19 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="relative text-[18vw] sm:text-[13vw] lg:text-[9rem] font-bold tracking-tighter leading-[0.86] mb-8"
           >
-            <span className="invisible select-none whitespace-pre-line" aria-hidden="true">
-              {FULL_NAME}
-            </span>
-            <span className="absolute inset-0 block">
+            <span ref={nameRef} className="paint-name relative inline-block">
               <span
                 aria-hidden="true"
-                className="name-halo absolute inset-0 whitespace-pre-line select-none"
+                className="name-halo absolute inset-0 select-none whitespace-pre-line"
               >
-                {typed}
+                Alejandro
+                <br />
+                Vázquez
               </span>
               <span className="name-lit relative whitespace-pre-line">
-                {typed}
-                {!done && <span ref={caretRef} className="caret" />}
+                Alejandro
+                <br />
+                Vázquez
               </span>
             </span>
           </motion.h1>
