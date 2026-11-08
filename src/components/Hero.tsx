@@ -21,9 +21,11 @@ export default function Hero() {
     ).matches;
 
     if (reduced) {
-      setTyped(FULL_NAME);
-      setDone(true);
-      return;
+      const id = window.setTimeout(() => {
+        setTyped(FULL_NAME);
+        setDone(true);
+      }, 0);
+      return () => window.clearTimeout(id);
     }
 
     let charIndex = 0;
