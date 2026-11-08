@@ -118,24 +118,21 @@ export default function Hero() {
             <span className="relative block">
               <span
                 aria-hidden="true"
-                className="block w-max whitespace-pre-line text-white/[0.07]"
+                className="invisible block w-max whitespace-pre-line"
               >
                 Alejandro
                 <br />
                 Vázquez
               </span>
 
-              <span aria-hidden="true" className="absolute inset-0 block">
-                <span
-                  ref={line1Ref}
-                  className="paint-line name-lit name-glow block w-max"
-                >
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 flex flex-col items-start"
+              >
+                <span ref={line1Ref} className="paint-line name-lit">
                   Alejandro
                 </span>
-                <span
-                  ref={line2Ref}
-                  className="paint-line name-lit name-glow block w-max"
-                >
+                <span ref={line2Ref} className="paint-line name-lit">
                   Vázquez
                 </span>
               </span>
