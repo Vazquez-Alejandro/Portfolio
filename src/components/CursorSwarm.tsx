@@ -15,12 +15,29 @@ type Agent = {
   size: number;
 };
 
+type FrameState = "idle" | "drawing" | "hold" | "fade" | "done";
+
 type Frame = {
   el: HTMLElement;
   label: string;
   color: string;
   progress: number;
-  target: number;
+  alpha: number;
+  hold: number;
+  state: FrameState;
+};
+
+type Drawer = {
+  x: number;
+  y: number;
+  lag: number;
+  angle: number;
+  radius: number;
+  speed: number;
+  color: string;
+  size: number;
+  frameIndex: number;
+  offset: number;
 };
 
 function drawCursor(
@@ -49,13 +66,7 @@ function drawCursor(
   ctx.restore();
 }
 
-function pointOnRect(
-  x: number,
-  y: number,
-  w: number,
-  h: number,
-  t: number
-) {
+function pointOnRect(x: number, y: number, w: number, h: number, t: number) {
   const per = 2 * (w + h);
   let d = Math.max(0, Math.min(1, t)) * per;
   if (d <= w) return { x: x + d, y };
@@ -105,11 +116,11 @@ export default function CursorSwarm() {
     };
     window.addEventListener("pointermove", onMove, { passive: true });
 
-    const agents: Agent[] = Array.from({ length: 22 }, (_, i) => ({
-      x: w / 2 + Math.cos((i / 22) * Math.PI * 2) * 30,
-      y: h / 2 + Math.sin((i / 22) * Math.PI * 2) * 30,
+    const agents: Agent[] = Array.from({ length: 18 }, (_, i) => ({
+      x: w / 2 + Math.cos((i / 18) * Math.PI * 2) * 30,
+      y: h / 2 + Math.sin((i / 18) * Math.PI * 2) * 30,
       lag: 0.12 + (i % 9) * 0.025,
-      angle: (i / 22) * Math.PI * 2,
+      angle: (i / 18) * Math.PI * 2,
       radius: 3 + (i % 6) * 4,
       speed: 0.5 + (i % 5) * 0.2,
       color: COLORS[i % COLORS.length],
@@ -123,8 +134,25 @@ export default function CursorSwarm() {
       label: el.dataset.swarm || "Sección",
       color: COLORS[i % COLORS.length],
       progress: 0,
-      target: 0,
+      alpha: 1,
+      hold: 0,
+      state: "idle",
     }));
+
+    const drawers: Drawer[] = frames.flatMap((frame, fi) =>
+      [0, 1].map((offset) => ({
+        x: w / 2,
+        y: h / 2,
+        lag: 0.16,
+        angle: (fi / frames.length) * Math.PI * 2 + offset * 0.6,
+        radius: 10 + offset * 8,
+        speed: 0.7 + offset * 0.2,
+        color: frame.color,
+        size: 14 - offset * 3,
+        frameIndex: fi,
+        offset,
+      }))
+    );
 
     let raf = 0;
     let last = performance.now();
@@ -137,7 +165,6 @@ export default function CursorSwarm() {
 
       ctx.clearRect(0, 0, w, h);
 
-      // Aura around the pointer
       if (mouse.active) {
         const g = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 160);
         g.addColorStop(0, "rgba(113, 75, 103, 0.18)");
@@ -146,15 +173,31 @@ export default function CursorSwarm() {
         ctx.fillRect(mouse.x - 160, mouse.y - 160, 320, 320);
       }
 
-      // Sections being drawn
       for (const frame of frames) {
         const r = frame.el.getBoundingClientRect();
         const visible = r.top < h * 0.82 && r.bottom > h * 0.18;
 
-        if (visible) frame.target = 1;
-        frame.progress += (frame.target - frame.progress) * Math.min(1, dt * 2.4);
-        if (frame.progress > 0.998) frame.progress = 1;
-        if (frame.progress <= 0.005) continue;
+        if (frame.state === "idle" && visible) frame.state = "drawing";
+
+        if (frame.state === "drawing") {
+          frame.progress += dt * 0.8;
+          if (frame.progress >= 1) {
+            frame.progress = 1;
+            frame.state = "hold";
+            frame.hold = 0.55;
+          }
+        } else if (frame.state === "hold") {
+          frame.hold -= dt;
+          if (frame.hold <= 0) frame.state = "fade";
+        } else if (frame.state === "fade") {
+          frame.alpha -= dt * 1.6;
+          if (frame.alpha <= 0) {
+            frame.alpha = 0;
+            frame.state = "done";
+          }
+        }
+
+        if (frame.progress <= 0.005 || frame.alpha <= 0.005) continue;
 
         const pad = 10;
         const x = r.left + pad;
@@ -164,9 +207,10 @@ export default function CursorSwarm() {
         if (ww <= 0 || hh <= 0) continue;
 
         const per = 2 * (ww + hh);
+        const a = frame.alpha;
 
         ctx.save();
-        ctx.globalAlpha = 0.5;
+        ctx.globalAlpha = 0.5 * a;
         ctx.strokeStyle = frame.color;
         ctx.lineWidth = 1;
         ctx.setLineDash([per * frame.progress, per]);
@@ -174,7 +218,7 @@ export default function CursorSwarm() {
         ctx.setLineDash([]);
 
         if (frame.progress > 0.02) {
-          ctx.globalAlpha = 0.9;
+          ctx.globalAlpha = 0.9 * a;
           ctx.fillStyle = frame.color;
           for (const [cx, cy] of [
             [x, y],
@@ -186,11 +230,9 @@ export default function CursorSwarm() {
           }
         }
 
-        // Label chip
         ctx.font = "500 10px ui-monospace, SFMono-Regular, Menlo, monospace";
         const tw = ctx.measureText(frame.label).width;
-        const la = Math.min(1, frame.progress * 3);
-        ctx.globalAlpha = 0.85 * la;
+        ctx.globalAlpha = 0.85 * a;
         ctx.fillStyle = "#0b070a";
         ctx.fillRect(x, y - 20, tw + 12, 16);
         ctx.strokeStyle = frame.color;
@@ -198,15 +240,39 @@ export default function CursorSwarm() {
         ctx.fillStyle = frame.color;
         ctx.fillText(frame.label, x + 6, y - 9);
         ctx.restore();
-
-        // Cursors tracing the perimeter
-        if (frame.progress < 0.999) {
-          const head = pointOnRect(x, y, ww, hh, frame.progress);
-          drawCursor(ctx, head.x, head.y, frame.color, 14, -20);
-          const tail = pointOnRect(x, y, ww, hh, Math.max(0, frame.progress - 0.018));
-          drawCursor(ctx, tail.x, tail.y, frame.color, 10, -8);
-        }
       }
+
+      // Cursors that detach to draw, then return to the swarm
+      drawers.forEach((d) => {
+        const frame = frames[d.frameIndex];
+        const r = frame.el.getBoundingClientRect();
+        let tx: number;
+        let ty: number;
+
+        if (
+          (frame.state === "drawing" || frame.state === "hold") &&
+          frame.progress > 0
+        ) {
+          const pad = 10;
+          const x = r.left + pad;
+          const y = r.top + pad;
+          const ww = r.width - pad * 2;
+          const hh = r.height - pad * 2;
+          const p = Math.max(0, frame.progress - d.offset * 0.02);
+          const pt = pointOnRect(x, y, ww, hh, p);
+          tx = pt.x;
+          ty = pt.y;
+        } else {
+          tx = mouse.x + Math.cos(time * 0.9 + d.angle) * d.radius;
+          ty = mouse.y + Math.sin(time * 1.2 + d.angle) * d.radius;
+        }
+
+        d.x += (tx - d.x) * d.lag;
+        d.y += (ty - d.y) * d.lag;
+
+        const rotate = Math.sin(time * d.speed + d.angle) * 18;
+        drawCursor(ctx, d.x, d.y, d.color, d.size, rotate);
+      });
 
       // Swarm following the pointer
       let prevX = mouse.x;
