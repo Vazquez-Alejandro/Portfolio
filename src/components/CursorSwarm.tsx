@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react";
 
 const COLORS = ["#d08bbd", "#c084fc", "#a78bfa", "#8b5cf6", "#714b67", "#e46e78"];
 
+type TrailPoint = { x: number; y: number };
+
 type Agent = {
   x: number;
   y: number;
@@ -13,6 +15,8 @@ type Agent = {
   speed: number;
   color: string;
   size: number;
+  heading: number;
+  trail: TrailPoint[];
 };
 
 type FrameState = "idle" | "drawing" | "hold" | "fade" | "done";
@@ -38,6 +42,8 @@ type Drawer = {
   size: number;
   frameIndex: number;
   offset: number;
+  heading: number;
+  trail: TrailPoint[];
 };
 
 function drawCursor(
@@ -64,6 +70,37 @@ function drawCursor(
   ctx.shadowBlur = 8;
   ctx.fill();
   ctx.restore();
+}
+
+function drawTrail(
+  ctx: CanvasRenderingContext2D,
+  trail: TrailPoint[],
+  color: string,
+  alpha: number,
+  width: number
+) {
+  if (trail.length < 2) return;
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = width;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  for (let i = 1; i < trail.length; i++) {
+    const t = i / trail.length;
+    ctx.globalAlpha = alpha * t;
+    ctx.beginPath();
+    ctx.moveTo(trail[i - 1].x, trail[i - 1].y);
+    ctx.lineTo(trail[i].x, trail[i].y);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function turnHeading(current: number, target: number) {
+  let diff = target - current;
+  while (diff > Math.PI) diff -= Math.PI * 2;
+  while (diff < -Math.PI) diff += Math.PI * 2;
+  return current + diff * 0.2;
 }
 
 function pointOnRect(x: number, y: number, w: number, h: number, t: number) {
@@ -125,6 +162,8 @@ export default function CursorSwarm() {
       speed: 0.5 + (i % 5) * 0.2,
       color: COLORS[i % COLORS.length],
       size: 8 + (i % 5) * 1.7,
+      heading: 0,
+      trail: [],
     }));
 
     const frames: Frame[] = Array.from(
@@ -151,6 +190,8 @@ export default function CursorSwarm() {
         size: 14 - offset * 3,
         frameIndex: fi,
         offset,
+        heading: 0,
+        trail: [],
       }))
     );
 
@@ -163,6 +204,8 @@ export default function CursorSwarm() {
       speed: 1,
       color: "#f7d4ee",
       size: 15 - i * 2.5,
+      heading: 0,
+      trail: [],
     }));
 
     const writing = { active: false, x: 0, y: 0, h: 0, until: 0 };
@@ -192,18 +235,15 @@ export default function CursorSwarm() {
 
       const isWriting = writing.active && now < writing.until;
 
-      const rand = (n: number) => {
-        const v = Math.sin(n * 127.1 + 311.7) * 43758.5453;
-        return v - Math.floor(v);
-      };
-
-      const paintPoint = (seed: number) => {
-        const rx = rand(seed * 1.7 + 1);
-        const ry = rand(seed * 3.1 + 2);
-        return {
-          x: writing.x - rx * 28,
-          y: writing.y + (ry - 0.5) * writing.h * 0.85,
-        };
+      const paintPoint = (seed: number, lane: number) => {
+        const p = seed * 1.3;
+        const sweep = 0.5 + 0.5 * Math.sin(time * 2.6 + p);
+        const x = writing.x - 8 - sweep * 52;
+        const y =
+          writing.y +
+          lane * writing.h * 0.34 +
+          Math.sin(time * 3.2 + p + lane) * writing.h * 0.09;
+        return { x, y };
       };
 
       ctx.clearRect(0, 0, w, h);
@@ -295,7 +335,8 @@ export default function CursorSwarm() {
         let ty: number;
 
         if (isWriting) {
-          const p = paintPoint(d.frameIndex * 7 + d.offset + 10);
+          const lane = ((d.frameIndex + d.offset) % 5 - 2) / 2;
+          const p = paintPoint(d.frameIndex * 7 + d.offset + 10, lane);
           tx = p.x;
           ty = p.y;
         } else if (
@@ -319,7 +360,23 @@ export default function CursorSwarm() {
         d.x += (tx - d.x) * d.lag;
         d.y += (ty - d.y) * d.lag;
 
-        const rotate = Math.sin(time * d.speed + d.angle) * 18;
+        d.trail.push({ x: d.x, y: d.y });
+        if (d.trail.length > 9) d.trail.shift();
+
+        const prev = d.trail[d.trail.length - 2];
+        if (prev) {
+          const dx = d.x - prev.x;
+          const dy = d.y - prev.y;
+          if (Math.hypot(dx, dy) > 0.2) {
+            d.heading = turnHeading(d.heading, Math.atan2(dy, dx));
+          }
+        }
+
+        const rotate = isWriting
+          ? (d.heading * 180) / Math.PI + 135
+          : Math.sin(time * d.speed + d.angle) * 18;
+
+        drawTrail(ctx, d.trail, d.color, isWriting ? 0.4 : 0.1, 1.1);
         drawCursor(ctx, d.x, d.y, d.color, d.size, rotate);
       });
 
@@ -329,7 +386,7 @@ export default function CursorSwarm() {
         let ty: number;
 
         if (isWriting) {
-          const p = paintPoint(100 + i * 5);
+          const p = paintPoint(100 + i * 5, (i - 1) * 0.7);
           tx = p.x + Math.cos(time * 7 + i) * 2;
           ty = p.y + Math.sin(time * 6 + i) * 2;
         } else {
@@ -340,7 +397,23 @@ export default function CursorSwarm() {
         wr.x += (tx - wr.x) * wr.lag;
         wr.y += (ty - wr.y) * wr.lag;
 
-        const rotate = Math.sin(time * wr.speed + wr.angle) * 18;
+        wr.trail.push({ x: wr.x, y: wr.y });
+        if (wr.trail.length > 9) wr.trail.shift();
+
+        const prev = wr.trail[wr.trail.length - 2];
+        if (prev) {
+          const dx = wr.x - prev.x;
+          const dy = wr.y - prev.y;
+          if (Math.hypot(dx, dy) > 0.2) {
+            wr.heading = turnHeading(wr.heading, Math.atan2(dy, dx));
+          }
+        }
+
+        const rotate = isWriting
+          ? (wr.heading * 180) / Math.PI + 135
+          : Math.sin(time * wr.speed + wr.angle) * 18;
+
+        drawTrail(ctx, wr.trail, wr.color, isWriting ? 0.45 : 0.1, 1.2);
         drawCursor(ctx, wr.x, wr.y, wr.color, wr.size, rotate);
       });
 
@@ -350,7 +423,8 @@ export default function CursorSwarm() {
         let ty: number;
 
         if (isWriting) {
-          const p = paintPoint(i * 3 + 50);
+          const lane = ((i % 7) - 3) / 3;
+          const p = paintPoint(i * 3 + 50, lane);
           tx = p.x + Math.cos(time * 6 + a.angle) * 3;
           ty = p.y + Math.sin(time * 5 + a.angle) * 2;
         } else {
@@ -364,21 +438,36 @@ export default function CursorSwarm() {
         a.x += (tx - a.x) * a.lag;
         a.y += (ty - a.y) * a.lag;
 
-        const rotate = Math.sin(time * a.speed + a.angle) * 18;
+        a.trail.push({ x: a.x, y: a.y });
+        if (a.trail.length > 9) a.trail.shift();
+
+        const prev = a.trail[a.trail.length - 2];
+        if (prev) {
+          const dx = a.x - prev.x;
+          const dy = a.y - prev.y;
+          if (Math.hypot(dx, dy) > 0.2) {
+            a.heading = turnHeading(a.heading, Math.atan2(dy, dx));
+          }
+        }
+
+        const rotate = isWriting
+          ? (a.heading * 180) / Math.PI + 135
+          : Math.sin(time * a.speed + a.angle) * 18;
 
         if (i > 0) {
-          const prev = agents[i - 1];
+          const prevAgent = agents[i - 1];
           ctx.save();
           ctx.globalAlpha = 0.08;
           ctx.strokeStyle = a.color;
           ctx.lineWidth = 1;
           ctx.beginPath();
-          ctx.moveTo(prev.x, prev.y);
+          ctx.moveTo(prevAgent.x, prevAgent.y);
           ctx.lineTo(a.x, a.y);
           ctx.stroke();
           ctx.restore();
         }
 
+        drawTrail(ctx, a.trail, a.color, isWriting ? 0.35 : 0.08, 1);
         drawCursor(ctx, a.x, a.y, a.color, a.size, rotate);
       });
 
