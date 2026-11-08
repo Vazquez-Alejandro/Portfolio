@@ -154,6 +154,32 @@ export default function CursorSwarm() {
       }))
     );
 
+    const writers: Agent[] = Array.from({ length: 3 }, (_, i) => ({
+      x: w / 2,
+      y: h / 2,
+      lag: 0.28,
+      angle: i * 2.1,
+      radius: 4,
+      speed: 1,
+      color: "#f7d4ee",
+      size: 15 - i * 2.5,
+    }));
+
+    const writing = { active: false, x: 0, y: 0, until: 0 };
+
+    const onWriting = (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (!detail?.active) {
+        writing.active = false;
+        return;
+      }
+      writing.active = true;
+      writing.x = detail.x;
+      writing.y = detail.y;
+      writing.until = performance.now() + 400;
+    };
+    window.addEventListener("swarm:writing", onWriting);
+
     let raf = 0;
     let last = performance.now();
     let time = 0;
@@ -274,6 +300,27 @@ export default function CursorSwarm() {
         drawCursor(ctx, d.x, d.y, d.color, d.size, rotate);
       });
 
+      // Cursors that write the hero name, then return to the swarm
+      const isWriting = writing.active && now < writing.until;
+      writers.forEach((wr, i) => {
+        let tx: number;
+        let ty: number;
+
+        if (isWriting) {
+          tx = writing.x + (i - 1) * 3;
+          ty = writing.y + (i - 1) * 5;
+        } else {
+          tx = mouse.x + Math.cos(time * 1.1 + wr.angle) * 14;
+          ty = mouse.y + Math.sin(time * 1.3 + wr.angle) * 14;
+        }
+
+        wr.x += (tx - wr.x) * wr.lag;
+        wr.y += (ty - wr.y) * wr.lag;
+
+        const rotate = Math.sin(time * wr.speed + wr.angle) * 18;
+        drawCursor(ctx, wr.x, wr.y, wr.color, wr.size, rotate);
+      });
+
       // Swarm following the pointer
       let prevX = mouse.x;
       let prevY = mouse.y;
@@ -314,6 +361,7 @@ export default function CursorSwarm() {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("swarm:writing", onWriting);
     };
   }, []);
 

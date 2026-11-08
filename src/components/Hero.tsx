@@ -1,6 +1,9 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+
+const FULL_NAME = "Alejandro\nVázquez";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -8,8 +11,71 @@ const fadeUp = {
 };
 
 export default function Hero() {
+  const [typed, setTyped] = useState("");
+  const [done, setDone] = useState(false);
+  const caretRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (reduced) {
+      setTyped(FULL_NAME);
+      setDone(true);
+      return;
+    }
+
+    let charIndex = 0;
+    let interval: ReturnType<typeof setInterval> | undefined;
+
+    const start = window.setTimeout(() => {
+      interval = setInterval(() => {
+        charIndex += 1;
+        const next = FULL_NAME.slice(0, charIndex);
+        setTyped(next);
+
+        if (charIndex >= FULL_NAME.length) {
+          if (interval) clearInterval(interval);
+          setDone(true);
+        }
+      }, 105);
+    }, 700);
+
+    return () => {
+      window.clearTimeout(start);
+      if (interval) clearInterval(interval);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (done) {
+      window.dispatchEvent(
+        new CustomEvent("swarm:writing", { detail: { active: false } })
+      );
+      return;
+    }
+
+    const caret = caretRef.current;
+    if (!caret) return;
+
+    const rect = caret.getBoundingClientRect();
+    window.dispatchEvent(
+      new CustomEvent("swarm:writing", {
+        detail: {
+          active: true,
+          x: rect.left,
+          y: rect.top + rect.height / 2,
+        },
+      })
+    );
+  }, [typed, done]);
+
   return (
-    <section data-swarm="Hero" className="relative min-h-screen flex items-center overflow-hidden px-6 pt-28 pb-20">
+    <section
+      data-swarm="Hero"
+      className="relative min-h-screen flex items-center overflow-hidden px-6 pt-28 pb-20"
+    >
       <div className="absolute -top-40 -right-40 w-[700px] h-[700px] rounded-full bg-odoo/30 blur-[160px]" />
       <div className="absolute bottom-0 -left-32 w-[500px] h-[500px] rounded-full bg-odoo/20 blur-[140px]" />
 
@@ -30,16 +96,19 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="relative text-[18vw] sm:text-[13vw] lg:text-[9rem] font-bold tracking-tighter leading-[0.86] mb-8"
           >
-            <span className="relative block">
-              <span aria-hidden="true" className="name-halo select-none">
-                Alejandro
-                <br />
-                Vázquez
+            <span className="invisible select-none whitespace-pre-line" aria-hidden="true">
+              {FULL_NAME}
+            </span>
+            <span className="absolute inset-0 block">
+              <span
+                aria-hidden="true"
+                className="name-halo absolute inset-0 whitespace-pre-line select-none"
+              >
+                {typed}
               </span>
-              <span className="name-lit relative">
-                Alejandro
-                <br />
-                Vázquez
+              <span className="name-lit relative whitespace-pre-line">
+                {typed}
+                {!done && <span ref={caretRef} className="caret" />}
               </span>
             </span>
           </motion.h1>

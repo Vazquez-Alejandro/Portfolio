@@ -115,6 +115,23 @@ body {
   inset: 0;
 }
 
+.caret {
+  display: inline-block;
+  width: 0.06em;
+  height: 0.82em;
+  margin-left: 0.04em;
+  vertical-align: -0.04em;
+  background: var(--color-ciruela);
+  box-shadow: 0 0 14px var(--color-ciruela);
+  animation: caret-blink 0.9s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
 .glass {
   background: rgba(24, 19, 23, 0.82);
   backdrop-filter: blur(24px) saturate(160%);
