@@ -1,0 +1,98 @@
+/* Portfolio clásico (ruta /clasico). Clases prefijadas con c- para no
+   chocar con los estilos de la versión nueva. */
+
+.c-root {
+  min-height: 100vh;
+  background-color: #030712;
+  color: #f9fafb;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  scroll-behavior: smooth;
+}
+
+.c-root ::selection {
+  background-color: #8b5cf6;
+  color: white;
+}
+
+@keyframes c-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes c-pulse-glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+.c-animate-float {
+  animation: c-float 6s ease-in-out infinite;
+}
+
+.c-animate-pulse-glow {
+  animation: c-pulse-glow 4s ease-in-out infinite;
+}
+
+.c-gradient-text {
+  background: linear-gradient(135deg, #8b5cf6, #06b6d4, #f472b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.c-gradient-border {
+  position: relative;
+  border-radius: 1rem;
+}
+
+.c-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #8b5cf6, #06b6d4, #f472b6);
+  z-index: -1;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.c-gradient-border:hover::before {
+  opacity: 1;
+}
+
+.c-glass {
+  background: rgba(17, 24, 39, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.c-section-container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 5rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .c-section-container {
+    padding: 6rem 2rem;
+  }
+}
+
+.c-root #about {
+  padding-top: 3rem;
+}
+
+.c-grid-pattern {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(139, 92, 246, 0.05) 1px, transparent 0);
+  background-size: 40px 40px;
+}
+
+.c-scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.c-scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

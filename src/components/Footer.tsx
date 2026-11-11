@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Mail } from "lucide-react";
 
 export default function Footer() {
@@ -10,6 +11,9 @@ export default function Footer() {
           © {new Date().getFullYear()} Alejandro Vázquez · Buenos Aires, Argentina
         </p>
         <div className="flex items-center gap-5">
+          <Link href="/clasico" className="text-gris hover:text-text transition-colors mono">
+            Versión clásica
+          </Link>
           <a
             href="https://github.com/Vazquez-Alejandro"
             target="_blank"
