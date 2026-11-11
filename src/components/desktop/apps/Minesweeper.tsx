@@ -10,14 +10,14 @@ type Status = "ready" | "playing" | "won" | "lost";
 
 const NUM_COLORS = [
   "",
-  "text-ciruela",
-  "text-[#7dd3fc]",
-  "text-[#e46e78]",
-  "text-[#c084fc]",
-  "text-[#fbbf24]",
-  "text-[#34d399]",
-  "text-white",
-  "text-gris",
+  "text-[#2fbf5f]",
+  "text-[#4de87f]",
+  "text-[#3dff7a]",
+  "text-[#a8ffc4]",
+  "text-[#1f9e4a]",
+  "text-[#d1ffe2]",
+  "text-[#eafff2]",
+  "text-[#6fbf86]",
 ];
 
 function emptyBoard(): Cell[][] {
@@ -126,11 +126,11 @@ export default function MinesweeperApp() {
   return (
     <div className="flex flex-col items-center gap-3">
       <div className="mono flex w-full items-center justify-between text-xs">
-        <span className="rounded-sm bg-black/40 px-2 py-1 text-ciruela">{String(minesLeft).padStart(2, "0")}</span>
+        <span className="rounded-sm bg-black/40 px-2 py-1 text-[#3dff7a]">{String(minesLeft).padStart(2, "0")}</span>
         <button
           type="button"
           onClick={reset}
-          className="rounded-sm border border-white/20 px-2 py-1 text-text hover:border-white/40"
+          className="rounded-sm border border-[#3dff7a]/35 px-2 py-1 text-[#eafff2] hover:border-[#3dff7a]/50"
         >
           {status === "won" ? "Ganaste" : status === "lost" ? "Perdiste" : "Nueva"}
         </button>
@@ -138,13 +138,13 @@ export default function MinesweeperApp() {
           type="button"
           onClick={() => setFlagMode((v) => !v)}
           aria-pressed={flagMode}
-          className={`rounded-sm px-2 py-1 ${flagMode ? "bg-odoo text-white" : "border border-white/20 text-text"}`}
+          className={`rounded-sm px-2 py-1 ${flagMode ? "bg-[#0b3d1c] text-[#eafff2]" : "border border-[#3dff7a]/35 text-[#eafff2]"}`}
         >
           Bandera {flagMode ? "on" : "off"}
         </button>
       </div>
 
-      <div className="grid select-none grid-cols-9 gap-[2px] rounded-sm bg-white/10 p-[2px]">
+      <div className="grid select-none grid-cols-9 gap-[2px] rounded-sm bg-[#3dff7a]/12 p-[2px]">
         {board.map((row, r) =>
           row.map((cell, c) => {
             const label = cell.open
@@ -168,8 +168,8 @@ export default function MinesweeperApp() {
                 }}
                 className={`mono grid h-7 w-7 place-items-center rounded-[2px] text-xs font-bold ${
                   cell.open
-                    ? `bg-[#1b1421] ${cell.mine ? "text-[#e46e78]" : NUM_COLORS[cell.n]}`
-                    : "bg-[#3a2d44] text-[#e46e78] hover:bg-[#4a3a57]"
+                    ? `bg-[#04120a] ${cell.mine ? "text-[#eafff2]" : NUM_COLORS[cell.n]}`
+                    : "bg-[#0e3a1e] text-[#3dff7a] hover:bg-[#155c2e]"
                 }`}
               >
                 {label}
@@ -179,7 +179,7 @@ export default function MinesweeperApp() {
         )}
       </div>
 
-      <p className="mono h-4 text-[11px] text-gris">
+      <p className="mono h-4 text-[11px] text-[#9fe8b5]">
         {status === "won" && "Limpiaste el tablero."}
         {status === "lost" && "Boom. Probá otra vez."}
         {!finished && "Click para abrir · clic derecho para marcar"}

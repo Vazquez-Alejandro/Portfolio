@@ -75,11 +75,11 @@ export default function CalculatorApp() {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="mono flex min-h-[64px] flex-col items-end justify-end rounded-sm border border-white/10 bg-black/40 px-3 py-2">
-        <span className="text-[10px] text-gris">
+      <div className="mono flex min-h-[64px] flex-col items-end justify-end rounded-sm border border-[#3dff7a]/25 bg-black/40 px-3 py-2">
+        <span className="text-[10px] text-[#9fe8b5]">
           {state.acc !== null && state.op ? `${format(state.acc)} ${state.op}` : " "}
         </span>
-        <span className="truncate text-2xl text-text">{state.display}</span>
+        <span className="truncate text-2xl text-[#eafff2]">{state.display}</span>
       </div>
 
       <div className="grid grid-cols-4 gap-2">
@@ -94,8 +94,8 @@ export default function CalculatorApp() {
               onClick={() => setState((s) => press(s, key))}
               className={`mono h-10 rounded-sm text-sm transition-colors ${span} ${
                 isOp
-                  ? "bg-odoo text-white hover:bg-ciruela"
-                  : "bg-white/5 text-text hover:bg-white/15"
+                  ? "bg-[#0b3d1c] text-[#eafff2] hover:bg-[#3dff7a]"
+                  : "bg-[#3dff7a]/8 text-[#eafff2] hover:bg-[#3dff7a]/15"
               }`}
             >
               {key}

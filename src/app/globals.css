@@ -200,18 +200,18 @@ body {
   }
 }
 
-/* Escritorio 2D (ruta /escritorio) */
+/* Escritorio 2D (ruta /escritorio) — monitor de fósforo verde */
 .desk-wall {
   background:
-    radial-gradient(ellipse at 15% 0%, rgba(208, 139, 189, 0.22), transparent 55%),
-    radial-gradient(ellipse at 90% 100%, rgba(113, 75, 103, 0.45), transparent 60%),
-    linear-gradient(180deg, #140e16 0%, #0b070a 100%);
+    radial-gradient(ellipse at 50% 0%, rgba(61, 255, 122, 0.1), transparent 60%),
+    radial-gradient(ellipse at 50% 110%, rgba(31, 158, 74, 0.2), transparent 65%),
+    linear-gradient(180deg, #02100a 0%, #010603 100%);
 }
 
 .desk-grid {
   background-image:
-    linear-gradient(rgba(208, 139, 189, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(208, 139, 189, 0.07) 1px, transparent 1px);
+    linear-gradient(rgba(61, 255, 122, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(61, 255, 122, 0.07) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
@@ -220,10 +220,12 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.16) 0 1px,
-    transparent 1px 3px
-  );
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.22) 0 1px,
+      transparent 1px 3px
+    ),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.45) 100%);
   z-index: 2000;
 }

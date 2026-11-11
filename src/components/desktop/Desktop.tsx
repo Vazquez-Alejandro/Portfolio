@@ -105,7 +105,7 @@ function Clock() {
     return () => window.clearInterval(id);
   }, []);
 
-  return <span className="mono shrink-0 text-[11px] tabular-nums text-white/80">{now || "--:--"}</span>;
+  return <span className="mono shrink-0 text-[11px] tabular-nums text-[#3dff7a]/80">{now || "--:--"}</span>;
 }
 
 export default function Desktop() {
@@ -231,10 +231,12 @@ export default function Desktop() {
   return (
     <main className="flex min-h-[100dvh] items-center justify-center bg-bg md:p-8">
       <div className="w-full md:max-w-5xl">
-        <div className="relative md:rounded-[28px] md:border md:border-white/10 md:bg-[#17111a] md:p-[2.2vw] md:shadow-[0_30px_80px_rgba(0,0,0,0.6)]">
-          <div
-            ref={screenRef}
-            className="desk-wall desk-grid crt relative h-[100dvh] select-none overflow-hidden md:h-auto md:aspect-[16/10] md:rounded-[10px]"
+        <div className="relative md:rounded-[26px] md:border md:border-[#8f877a] md:bg-[#c9c1b3] md:p-[1.8vw] md:shadow-[0_30px_80px_rgba(0,0,0,0.6)]">
+          <div className="relative md:rounded-[14px] md:bg-[#2a261f] md:p-[0.9vw]">
+            <span className="absolute bottom-1 right-3 hidden h-2 w-2 rounded-full bg-[#3dff7a] shadow-[0_0_8px_#3dff7a] md:block" />
+            <div
+              ref={screenRef}
+            className="desk-wall desk-grid crt relative h-[100dvh] select-none overflow-hidden md:h-auto md:aspect-[16/10] md:rounded-[6px]"
           >
             <div className="absolute left-3 top-3 grid grid-cols-4 gap-2 md:grid-flow-col md:grid-cols-none md:grid-rows-5 md:gap-3">
               {ICONS.map((item) => {
@@ -244,12 +246,12 @@ export default function Desktop() {
                     key={item.app}
                     type="button"
                     onClick={() => openApp(item.app)}
-                    className="flex w-[68px] flex-col items-center gap-1 rounded-md p-1 text-center hover:bg-white/10 focus-visible:bg-white/15 md:w-[84px]"
+                    className="flex w-[68px] flex-col items-center gap-1 rounded-md p-1 text-center hover:bg-[#3dff7a]/12 focus-visible:bg-[#3dff7a]/15 md:w-[84px]"
                   >
-                    <span className="grid h-10 w-10 place-items-center rounded-md border border-ciruela/40 bg-odoo/70 text-white shadow-[0_0_14px_rgba(208,139,189,0.25)]">
+                    <span className="grid h-10 w-10 place-items-center rounded-md border border-[#3dff7a]/40 bg-[#0b3d1c]/70 text-[#eafff2] shadow-[0_0_14px_rgba(61,255,122,0.3)]">
                       <Icon size={20} />
                     </span>
-                    <span className="mono text-[10px] leading-tight text-white drop-shadow">{item.label}</span>
+                    <span className="mono text-[10px] leading-tight text-[#eafff2] drop-shadow">{item.label}</span>
                   </button>
                 );
               })}
@@ -278,11 +280,11 @@ export default function Desktop() {
               );
             })}
 
-            <div className="absolute inset-x-0 bottom-0 z-[1000] flex h-10 items-center gap-2 border-t border-ciruela/30 bg-[#0d0910]/95 px-2">
+            <div className="absolute inset-x-0 bottom-0 z-[1000] flex h-10 items-center gap-2 border-t border-[#3dff7a]/30 bg-[#02100a]/95 px-2">
               <button
                 type="button"
                 onClick={() => openApp("about")}
-                className="mono h-7 shrink-0 rounded-sm bg-odoo px-3 text-xs text-white hover:bg-ciruela"
+                className="mono h-7 shrink-0 rounded-sm bg-[#0b3d1c] px-3 text-xs text-[#eafff2] hover:bg-[#3dff7a] hover:text-[#02100a]"
               >
                 INICIO
               </button>
@@ -293,7 +295,7 @@ export default function Desktop() {
                     type="button"
                     onClick={() => focus(win.id)}
                     className={`mono h-7 max-w-[140px] shrink-0 truncate rounded-sm px-2 text-[11px] ${
-                      win.id === topId ? "bg-white/15 text-white" : "text-gris hover:bg-white/10"
+                      win.id === topId ? "bg-[#3dff7a]/15 text-[#eafff2]" : "text-[#9fe8b5] hover:bg-[#3dff7a]/12"
                     }`}
                   >
                     {win.title}
@@ -303,9 +305,10 @@ export default function Desktop() {
               <Clock />
             </div>
           </div>
+          </div>
 
-          <div className="mx-auto hidden h-6 w-28 bg-[#17111a] md:block" />
-          <div className="mx-auto hidden h-2 w-44 rounded-b-xl bg-[#1d1622] md:block" />
+          <div className="mx-auto hidden h-5 w-24 bg-[#c9c1b3] md:block" />
+          <div className="mx-auto hidden h-2 w-40 rounded-b-lg bg-[#b5ad9d] md:block" />
         </div>
       </div>
     </main>

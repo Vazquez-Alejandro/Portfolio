@@ -83,26 +83,26 @@ export default function TerminalApp() {
         {entries.map((entry, i) => (
           <div key={i}>
             {entry.cmd && (
-              <p className="text-ciruela">
-                <span className="text-white/60">visitante@kfolio:~$</span> {entry.cmd}
+              <p className="text-[#3dff7a]">
+                <span className="text-[#3dff7a]/60">visitante@kfolio:~$</span> {entry.cmd}
               </p>
             )}
             {entry.out.map((line, j) => (
-              <p key={j} className="whitespace-pre-wrap break-all text-text/90">
+              <p key={j} className="whitespace-pre-wrap break-all text-[#eafff2]/90">
                 {line}
               </p>
             ))}
           </div>
         ))}
       </div>
-      <form onSubmit={submit} className="mt-2 flex items-center gap-2 border-t border-white/10 pt-2">
-        <span className="text-white/60">visitante@kfolio:~$</span>
+      <form onSubmit={submit} className="mt-2 flex items-center gap-2 border-t border-[#3dff7a]/25 pt-2">
+        <span className="text-[#3dff7a]/60">visitante@kfolio:~$</span>
         <input
           autoFocus
           value={input}
           onChange={(e) => setInput(e.target.value)}
           aria-label="Comando"
-          className="min-w-0 flex-1 bg-transparent text-text outline-none"
+          className="min-w-0 flex-1 bg-transparent text-[#eafff2] outline-none"
           autoComplete="off"
           spellCheck={false}
         />
